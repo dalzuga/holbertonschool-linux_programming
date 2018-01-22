@@ -11,9 +11,11 @@ int main(void)
 	
 	dir = opendir(".");
 
-	while ((read = readdir(dir)) != NULL)
+	read = readdir(dir);
+	while (read != NULL)
 	{
 		printf("%s\n", read->d_name);
+		read = readdir(dir);
 	}
 
 	closedir(dir);
