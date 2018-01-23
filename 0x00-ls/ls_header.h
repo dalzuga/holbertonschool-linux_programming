@@ -1,5 +1,5 @@
-#ifndef LS_HEADER_H
-#define LS_HEADER_H
+#ifndef _LS_HEADER_H_
+#define _LS_HEADER_H_
 
 #include <stdio.h>
 #include <dirent.h>

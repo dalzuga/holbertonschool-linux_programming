@@ -5,14 +5,20 @@
  *
  * Return: 1 on failure, 0 on success.
  */
-int main(void)
+int main(int argc, char *argv[])
 {
 	dir_struct *ds = NULL;
+	const char* dir_path_name;
+
+	if (argc == 2)
+		dir_path_name = argv[1];
+	else
+		dir_path_name = ".";
 
 	if (alloc_init_ds(&ds) == 1)
 		return (1);
 
-	if (_opendir(ds, ".") == 1)
+	if (_opendir(ds, dir_path_name) == 1)
 		return (1);
 
 	ds->read = readdir(ds->dir);
