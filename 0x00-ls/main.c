@@ -2,6 +2,8 @@
 
 /**
  * main - entry point for ls.
+ *
+ * Return: 1 on failure, 0 on success.
  */
 int main(void)
 {
@@ -65,18 +67,19 @@ int alloc_init_ds(dir_struct **ds)
  * _opendir - wrapper for opendir with checks.
  *
  * @ds: the address of the main dir_struct
- * 
+ * @dir_path_name: the full path to the directory, including its name
+ *
  * Return: 1 on failure, 0 on success.
  */
-int _opendir(dir_struct *ds, const char *dir_name)
+int _opendir(dir_struct *ds, const char *dir_path_name)
 {
 	printf("address of ds: %p\n", (void *) ds);
-	ds->dir = opendir(dir_name);
+	ds->dir = opendir(dir_path_name);
 	if (ds->dir == NULL)
 	{
 		perror("ls");
 		return (1);
 	}
-	
+
 	return (0);
 }
