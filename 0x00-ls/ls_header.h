@@ -5,12 +5,26 @@
 #include <dirent.h>
 #include <stdlib.h>
 
+#define COMMAND(NAME) { #NAME, NAME ## _command};
+
 typedef struct dir_struct
 {
 	DIR *dir;
 	struct dirent *read;
 	int tmp;
 } dir_struct;
+
+typedef struct fp_struct
+{
+	void (*fp)(void);
+} fp_struct;
+
+typedef struct command commands[] =
+{
+	COMMAND (quit),
+	COMMAND (help)
+};
+
 
 /* alloc_init_ds - allocates and zeroes the dir_struct */
 int alloc_init_ds(dir_struct **ds);
