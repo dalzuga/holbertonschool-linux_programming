@@ -3,6 +3,9 @@
 /**
  * main - entry point for ls.
  *
+ * @argc: stores the number of arguments
+ * @argv: the array of arguments
+ *
  * Return: 1 on failure, 0 on success.
  */
 int main(int argc, char *argv[])
