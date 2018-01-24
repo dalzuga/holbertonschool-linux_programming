@@ -18,16 +18,7 @@ int main(int argc, char *argv[])
 	if (_opendir(ds) == 1)
 		return (1);
 
-	ds->read = readdir(ds->dir);
-	while (1)
-	{
-		if (ds->read == NULL)
-			break;
-
-		printf("%s (%d) ", (ds->read)->d_name, (ds->read)->d_type);
-		ds->read = readdir(ds->dir);
-	}
-	printf("\n");
+	ls_loop(ds);
 
 	ds->tmp = closedir(ds->dir);
 	if (ds->tmp == -1)
@@ -71,7 +62,6 @@ int alloc_init_ds(dir_struct **ds)
  * _opendir - wrapper for opendir with checks.
  *
  * @ds: the address of the main dir_struct
- * @dir_path_name: the full path to the directory, including its name
  *
  * Return: 1 on failure, 0 on success.
  */
