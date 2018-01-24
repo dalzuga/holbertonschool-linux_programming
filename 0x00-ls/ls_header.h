@@ -12,6 +12,11 @@ typedef struct dir_struct
 	int tmp;
 } dir_struct;
 
+typedef struct fp_struct
+{
+	void (*fp)(void);
+} fp_struct;
+
 /* alloc_init_ds - allocates and zeroes the dir_struct */
 int alloc_init_ds(dir_struct **ds);
 
