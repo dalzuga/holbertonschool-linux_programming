@@ -8,17 +8,14 @@
 int main(int argc, char *argv[])
 {
 	dir_struct *ds = NULL;
-	const char* dir_path_name;
-
-	if (argc == 2)
-		dir_path_name = argv[1];
-	else
-		dir_path_name = ".";
 
 	if (alloc_init_ds(&ds) == 1)
 		return (1);
 
-	if (_opendir(ds, dir_path_name) == 1)
+	if (argc >= 2)
+		ds->dir_path_name = argv[1];
+
+	if (_opendir(ds) == 1)
 		return (1);
 
 	ds->read = readdir(ds->dir);
@@ -63,6 +60,7 @@ int alloc_init_ds(dir_struct **ds)
 	(*ds)->dir = NULL;
 	(*ds)->read = NULL;
 	(*ds)->tmp = 0;
+	(*ds)->dir_path_name = ".";
 
 	printf("address of (*ds)->dir: %p\n", (void *) (*ds)->dir);
 
@@ -77,10 +75,10 @@ int alloc_init_ds(dir_struct **ds)
  *
  * Return: 1 on failure, 0 on success.
  */
-int _opendir(dir_struct *ds, const char *dir_path_name)
+int _opendir(dir_struct *ds)
 {
 	printf("address of ds: %p\n", (void *) ds);
-	ds->dir = opendir(dir_path_name);
+	ds->dir = opendir(ds->dir_path_name);
 	if (ds->dir == NULL)
 	{
 		perror("ls");
