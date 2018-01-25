@@ -3,18 +3,18 @@
 /**
  * ls_loop - loop through directory entries
  *
- * @ds: the address of the main dir_struct
+ * @lss: the address of the main ls_struct
  */
-void ls_loop(dir_struct *ds)
+void ls_loop(ls_struct *lss)
 {
-	ds->read = readdir(ds->dir);
+	lss->read = readdir(lss->dir);
 	while (1)
 	{
-		if (ds->read == NULL)
+		if (lss->read == NULL)
 			break;
 
-		printf("%s (%d) ", (ds->read)->d_name, (ds->read)->d_type);
-		ds->read = readdir(ds->dir);
+		printf("%s (%d) ", (lss->read)->d_name, (lss->read)->d_type);
+		lss->read = readdir(lss->dir);
 	}
 	printf("\n");
 }

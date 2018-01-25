@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 /**
- * struct dir_struct - stores needed information for the program
+ * struct ls_struct - stores needed information for the program
  *
  * @dir: the address of the DIR struct
  * @read: the pointer to read the stream returned by readdir
@@ -16,21 +16,34 @@
  * Description: This struct is being used to store necessary variables as it
  * gets passed around from function to function.
  */
-typedef struct dir_struct
+typedef struct ls_struct
 {
 	DIR *dir;
 	struct dirent *read;
 	const char *dir_path_name;
 	int tmp;
-} dir_struct;
+} ls_struct;
 
-/* alloc_init_ds - allocates and zeroes the dir_struct */
-int alloc_init_ds(dir_struct **ds);
+typedef struct ll_node
+{
+	char *str;
+	int n;
+} ll_node;
+
+typedef struct ll
+{
+	struct ll *prev;
+	struct ll *next;
+	struct ll_node *data;
+} ll;
+
+/* alloc_init_lss - allocates and zeroes the ls_struct */
+int alloc_init_lss(ls_struct **lss);
 
 /* _opendir - wrapper for opendir with checks. */
-int _opendir(dir_struct *ds);
+int _opendir(ls_struct *lss);
 
 /* ls_loop - loop through directory entries */
-void ls_loop(dir_struct *ds);
+void ls_loop(ls_struct *lss);
 
 #endif

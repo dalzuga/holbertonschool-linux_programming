@@ -1,7 +1,7 @@
 #include "ls_header.h"
 
 /**
- * main - entry point for ls.
+ * main - entry point for the program.
  *
  * @argc: stores the number of arguments
  * @argv: the array of arguments
@@ -10,53 +10,55 @@
  */
 int main(int argc, char *argv[])
 {
-	dir_struct *ds = NULL;
+	ls_struct *lss = NULL;
 
-	if (alloc_init_ds(&ds) == 1)
+	if (alloc_init_lss(&lss) == 1)
 		return (1);
 
 	if (argc >= 2)
-		ds->dir_path_name = argv[1];
+	{
+		lss->dir_path_name = argv[1];
+	}
 
-	if (_opendir(ds) == 1)
+	if (_opendir(lss) == 1)
 		return (1);
 
-	ls_loop(ds);
+	ls_loop(lss);
 
-	ds->tmp = closedir(ds->dir);
-	if (ds->tmp == -1)
+	lss->tmp = closedir(lss->dir);
+	if (lss->tmp == -1)
 	{
 		perror("closedir");
 		return (1);
 	}
 
-	free(ds);
+	free(lss);
 
 	return (0);
 }
 
 /**
- * alloc_init_ds - allocates and zeroes the dir_struct
+ * alloc_init_lss - allocates and zeroes the ls_struct
  *
- * @ds: the address of the pointer to the dir_struct
+ * @lss: the address of the pointer to the ls_struct
  *
  * Return: 1 on failure, 0 on success.
  */
-int alloc_init_ds(dir_struct **ds)
+int alloc_init_lss(ls_struct **lss)
 {
-	*ds = malloc(sizeof(dir_struct));
-	if (*ds == NULL)
+	*lss = malloc(sizeof(ls_struct));
+	if (*lss == NULL)
 	{
 		perror("malloc");
 		return (1);
 	}
 
-	(*ds)->dir = NULL;
-	(*ds)->read = NULL;
-	(*ds)->tmp = 0;
-	(*ds)->dir_path_name = ".";
+	(*lss)->dir = NULL;
+	(*lss)->read = NULL;
+	(*lss)->tmp = 0;
+	(*lss)->dir_path_name = ".";
 
-	printf("address of (*ds)->dir: %p\n", (void *) (*ds)->dir);
+	printf("address of (*lss)->dir: %p\n", (void *) (*lss)->dir);
 
 	return (0);
 }
@@ -64,17 +66,17 @@ int alloc_init_ds(dir_struct **ds)
 /**
  * _opendir - wrapper for opendir with checks.
  *
- * @ds: the address of the main dir_struct
+ * @lss: the address of the main ls_struct
  *
  * Return: 1 on failure, 0 on success.
  */
-int _opendir(dir_struct *ds)
+int _opendir(ls_struct *lss)
 {
-	printf("address of ds: %p\n", (void *) ds);
-	ds->dir = opendir(ds->dir_path_name);
-	if (ds->dir == NULL)
+	printf("address of lss: %p\n", (void *) lss);
+	lss->dir = opendir(lss->dir_path_name);
+	if (lss->dir == NULL)
 	{
-		perror("ls");
+		perror("opendir");
 		return (1);
 	}
 

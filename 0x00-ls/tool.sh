@@ -1,5 +1,4 @@
 #!/bin/bash
-
 make clean
 betty-doc *
 betty-style *
