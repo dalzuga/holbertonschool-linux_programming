@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 		return (1);
 
 	if (argc >= 2)
-		lss->dir_path_name = argv[1];
+		lss->dir_path_name[0] = argv[1];
 
 	if (_opendir(lss) == 1)
 		return (1);
@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
 		return (1);
 	}
 
+	free(lss->dir_path_name);
 	free(lss);
 
 	return (0);
@@ -56,7 +57,16 @@ int alloc_init_lss(ls_struct **lss)
 	(*lss)->dir = NULL;
 	(*lss)->read = NULL;
 	(*lss)->tmp = 0;
-	(*lss)->dir_path_name = ".";
+	(*lss)->dir_path_name = NULL;
+
+	(*lss)->dir_path_name = malloc(sizeof(const char *) * 1);
+	if ((*lss)->dir_path_name == NULL)
+	{
+		perror("malloc");
+		return (1);
+	}
+
+	((*lss)->dir_path_name)[0] = ".";
 
 	printf("address of (*lss)->dir: %p\n", (void *) (*lss)->dir);
 
@@ -73,7 +83,7 @@ int alloc_init_lss(ls_struct **lss)
 int _opendir(ls_struct *lss)
 {
 	printf("address of lss: %p\n", (void *) lss);
-	lss->dir = opendir(lss->dir_path_name);
+	lss->dir = opendir(lss->dir_path_name[0]);
 	if (lss->dir == NULL)
 	{
 		perror("opendir");

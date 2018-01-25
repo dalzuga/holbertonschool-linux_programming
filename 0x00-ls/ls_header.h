@@ -10,7 +10,7 @@
  *
  * @dir: the address of the DIR struct
  * @read: the pointer to read the stream returned by readdir
- * @dir_path_name: the directory path
+ * @dir_path_name: array of directory paths
  * @tmp: convenience variable to store temporary information
  *
  * Description: This struct is being used to store necessary variables as it
@@ -20,7 +20,7 @@ typedef struct ls_struct
 {
 	DIR *dir;
 	struct dirent *read;
-	const char *dir_path_name;
+	const char **dir_path_name;
 	int tmp;
 } ls_struct;
 
