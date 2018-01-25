@@ -16,12 +16,12 @@ int main(int argc, char *argv[])
 		return (1);
 
 	if (argc >= 2)
-	{
 		lss->dir_path_name = argv[1];
-	}
 
 	if (_opendir(lss) == 1)
 		return (1);
+
+	/* at this point, we have opened the DIR struct */
 
 	ls_loop(lss);
 
