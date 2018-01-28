@@ -27,6 +27,8 @@ int count_entries(ls_struct *lss)
 		i++;
 	}
 
+	/* printf("count_entries() total: %d\n", i); */
+
 	closedir(lss->dir);
 	return (i);
 }

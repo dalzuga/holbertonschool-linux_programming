@@ -7,12 +7,11 @@
  */
 void ls_loop(ls_struct *lss)
 {
-	/* char **entry = NULL; */
+	char **entry = NULL;
 	int n = 0;
+	int i = 0;
 
 	n = count_entries(lss);
-
-	printf("total: %d\n", n);
 
 	if (_opendir(lss) == 1)
 	{
@@ -22,14 +21,35 @@ void ls_loop(ls_struct *lss)
 
 	/* at this point, we have opened the DIR struct */
 
+	entry = malloc(sizeof(char *) * n);
+	if (entry == NULL)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+
 	lss->read = readdir(lss->dir);
-	while (1)
+	while (i < n)
 	{
 		if (lss->read == NULL)
-			break;
+		{
+			perror("directory total entries change detected");
+			exit(EXIT_FAILURE);
+		}
 
-		printf("%s (%d) ", (lss->read)->d_name, (lss->read)->d_type);
+		entry[i] = _strdup(lss->read->d_name);
+		printf("%s ", entry[i]);
 		lss->read = readdir(lss->dir);
+		i++;
 	}
 	printf("\n");
+
+	i = 0;
+	while (i < n)
+	{
+		free(entry[i]);
+		i++;
+	}
+
+	free(entry);
 }

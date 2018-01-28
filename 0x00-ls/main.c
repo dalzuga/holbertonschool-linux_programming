@@ -63,7 +63,7 @@ int alloc_init_lss(ls_struct **lss)
 
 	((*lss)->dir_path_name)[0] = ".";
 
-	printf("address of (*lss)->dir: %p\n", (void *) (*lss)->dir);
+	/* printf("main.c: (*lss)->dir: %p\n", (void *) (*lss)->dir); */
 
 	return (0);
 }
@@ -77,7 +77,7 @@ int alloc_init_lss(ls_struct **lss)
  */
 int _opendir(ls_struct *lss)
 {
-	printf("address of lss: %p\n", (void *) lss);
+	/* printf("address of lss: %p\n", (void *) lss); */
 	lss->dir = opendir(lss->dir_path_name[0]);
 	if (lss->dir == NULL)
 	{
