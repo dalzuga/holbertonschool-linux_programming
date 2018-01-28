@@ -8,8 +8,10 @@
 void ls_loop(ls_struct *lss)
 {
 	char **entry = NULL;
+	char *entry_tmp = NULL;
 	int n = 0;
 	int i = 0;
+	int j = 0;
 
 	n = count_entries(lss);
 
@@ -44,6 +46,21 @@ void ls_loop(ls_struct *lss)
 	}
 	printf("\n");
 
+	/* bubble sort the entries */
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j < n; j++)
+		{
+			if (_strcmp(entry[j], entry[i]) > 0)
+			{
+				entry_tmp = entry[j];
+				entry[j] = entry[i];
+				entry[i] = entry_tmp;
+			}
+		}
+	}
+
+	/* free the entries */
 	i = 0;
 	while (i < n)
 	{
