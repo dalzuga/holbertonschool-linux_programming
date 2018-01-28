@@ -18,11 +18,6 @@ int main(int argc, char *argv[])
 	if (argc >= 2)
 		lss->dir_path_name[0] = argv[1];
 
-	if (_opendir(lss) == 1)
-		return (1);
-
-	/* at this point, we have opened the DIR struct */
-
 	ls_loop(lss);
 
 	lss->tmp = closedir(lss->dir);

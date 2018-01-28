@@ -24,19 +24,6 @@ typedef struct ls_struct
 	int tmp;
 } ls_struct;
 
-typedef struct ll_node
-{
-	char *str;
-	int n;
-} ll_node;
-
-typedef struct ll
-{
-	struct ll *prev;
-	struct ll *next;
-	struct ll_node *data;
-} ll;
-
 /* alloc_init_lss - allocates and zeroes the ls_struct */
 int alloc_init_lss(ls_struct **lss);
 
@@ -45,5 +32,8 @@ int _opendir(ls_struct *lss);
 
 /* ls_loop - loop through directory entries */
 void ls_loop(ls_struct *lss);
+
+/* count_entries - counts the number of entries in an opened directory */
+int count_entries(ls_struct *lss);
 
 #endif
