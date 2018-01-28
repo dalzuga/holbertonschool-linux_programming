@@ -11,11 +11,22 @@ int count_entries(ls_struct *lss)
 {
 	int i = 0;
 
+	if (_opendir(lss) == 1)
+	{
+		perror("_opendir");
+		exit(EXIT_FAILURE);
+	}
+
+	/* at this point, we have opened the DIR struct */
+
 	while (1)
 	{
 		lss->read = readdir(lss->dir);
 		if (lss->read == NULL)
-			return (i);
+			break;
 		i++;
 	}
+
+	closedir(lss->dir);
+	return (i);
 }

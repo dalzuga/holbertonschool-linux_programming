@@ -10,17 +10,7 @@ void ls_loop(ls_struct *lss)
 	/* char **entry = NULL; */
 	int n = 0;
 
-	if (_opendir(lss) == 1)
-	{
-		perror("_opendir");
-		exit(EXIT_FAILURE);
-	}
-
-	/* at this point, we have opened the DIR struct */
-
 	n = count_entries(lss);
-
-	closedir(lss->dir);
 
 	printf("total: %d\n", n);
 
@@ -30,7 +20,7 @@ void ls_loop(ls_struct *lss)
 		exit(EXIT_FAILURE);
 	}
 
-	/* at this point, we have re-opened the DIR struct */
+	/* at this point, we have opened the DIR struct */
 
 	lss->read = readdir(lss->dir);
 	while (1)
