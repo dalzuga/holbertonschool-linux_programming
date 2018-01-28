@@ -40,11 +40,9 @@ void ls_loop(ls_struct *lss)
 		}
 
 		entry[i] = _strdup(lss->read->d_name);
-		printf("%s ", entry[i]);
 		lss->read = readdir(lss->dir);
 		i++;
 	}
-	printf("\n");
 
 	/* bubble sort the entries */
 	for (i = 0; i < n; i++)
@@ -59,6 +57,23 @@ void ls_loop(ls_struct *lss)
 			}
 		}
 	}
+
+	/* print the entries */
+	for (i = 0; i < n; i++)
+	{
+		if (entry[i][0] == '.')
+		{
+		}
+		else if (i != (n - 1))
+		{
+			printf("%s ", entry[i]);
+		}
+		else
+		{
+			printf("%s", entry[i]);
+		}
+	}
+	printf("\n");
 
 	/* free the entries */
 	i = 0;
