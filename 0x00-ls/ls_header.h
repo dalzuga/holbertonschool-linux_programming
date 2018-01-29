@@ -45,4 +45,9 @@ char *_strdup(const char *s1);
 /* _strcmp - compare two strings */
 int _strcmp(const char *s1, const char *s2);
 
+/* _mstrcmp - modified _strcmp for ls */
+int _mstrcmp(const char *s1, const char *s2);
+
+char _charup(const char c);
+
 #endif

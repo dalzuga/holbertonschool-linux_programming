@@ -49,7 +49,7 @@ void ls_loop(ls_struct *lss)
 	{
 		for (j = 0; j < n; j++)
 		{
-			if (_strcmp(entry[j], entry[i]) > 0)
+			if (_mstrcmp(entry[j], entry[i]) > 0)
 			{
 				entry_tmp = entry[j];
 				entry[j] = entry[i];
