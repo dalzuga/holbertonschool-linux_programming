@@ -1,10 +1,11 @@
 #ifndef __GET_LINE_H_
-#define
+#define __GET_LINE_H_
 
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define READ_SIZE 64
 
