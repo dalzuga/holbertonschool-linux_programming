@@ -20,13 +20,13 @@ char *_getline(const int fd)
 	if (buf == NULL)
 	{
 		perror("malloc");
-		return NULL;
+		return (NULL);
 	}
 
 	while ((count != -1) && (nl_flag == 0))
 	{
 		count = read(fd, buf, READ_SIZE);
-		for (i = 0; i < count; i++)
+		for (i = 0; i < count - 1; i++)
 		{
 			if (buf[i] == '\n')
 			{
@@ -36,10 +36,15 @@ char *_getline(const int fd)
 		}
 	}
 
-	if (nl_flag == 1)
+	s = malloc(sizeof(char) * (i + 1));
+	if (s == NULL)
 	{
-		write(1, buf, count);
+		perror("malloc");
+		return (NULL);
 	}
+
+	strncpy(s, buf, i);
+	s[i + 1] = '\0';
 
 	free(buf);
 
