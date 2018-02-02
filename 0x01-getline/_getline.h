@@ -11,4 +11,6 @@
 
 char *_getline(const int fd);
 
+char *_getfirstline(const int fd);
+
 #endif
