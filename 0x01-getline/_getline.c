@@ -24,9 +24,9 @@ char *_getline(const int fd)
 		if (count == 0) /* end of file */
 			break;
 
-		for (i = 0; buf[i] != '\n'; i++)
+		for (i = 0; buf[i] != '\n'; i++) /* look for new line */
 		{
-			if (i >= READ_SIZE)
+			if (i >= READ_SIZE) /* if no new line */
 			{
 				/* alloc more */
 			}
