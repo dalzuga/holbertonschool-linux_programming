@@ -12,9 +12,10 @@ char *_getline(const int fd)
 	int index;
 	char *s = NULL, *s2 __attribute__((unused)) = NULL;
 	char *buf = NULL;
+	int s_len = 0;
 	int i = 0;
 	int count = 0;
-	int multiplier = 1;
+	int mult = 1;
 
 	while (1)
 	{
@@ -26,9 +27,14 @@ char *_getline(const int fd)
 
 		for (i = 0; buf[i] != '\n'; i++) /* look for new line */
 		{
-			if (i >= READ_SIZE) /* if no new line */
+			/* Appends */
+			if (i >= READ_SIZE) /* if no new line (line is long) */
 			{
-				/* alloc more */
+				s2 = malloc(sizeof(char) * READ_SIZE);
+				s2 = read(sizeof(char) * READ_SIZE); /* read */
+				s_len = strlen(s);
+				buf = malloc(sizeof(char) * (s_len + READ_SIZE));
+				strcat(buf, s, s2);
 			}
 		}
 
