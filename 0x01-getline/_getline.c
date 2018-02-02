@@ -13,6 +13,7 @@ char *_getline(const int fd)
 	char *s = NULL, *s2 __attribute__((unused)) = NULL;
 	char *buf = NULL;
 	int s_len = 0;
+	int buf_len = 0;
 	int i = 0;
 	int count = 0;
 	int mult = 1;
@@ -35,11 +36,9 @@ char *_getline(const int fd)
 				s_len = strlen(s);
 				buf = malloc(sizeof(char) * (s_len + READ_SIZE));
 				strcat(buf, s, s2);
+				buf_len = s_len + READ_SIZE;
 			}
 		}
-
-		s = malloc(sizeof(count));
-		strncpy(s, buf, count);
 
 		/* 
                  * for (i = 0; i < READ_SIZE; i++)
