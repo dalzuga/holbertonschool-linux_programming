@@ -48,6 +48,7 @@ int _strcmp(const char *s1, const char *s2);
 /* _mstrcmp - modified _strcmp for ls */
 int _mstrcmp(const char *s1, const char *s2);
 
+/* _charup - returns uppercase letter corresponding to a character. */
 char _charup(const char c);
 
 #endif

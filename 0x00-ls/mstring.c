@@ -40,6 +40,15 @@ int _mstrcmp(const char *s1, const char *s2)
 	return (s1[i] - s2[j]);
 }
 
+/**
+ * _charup - returns uppercase letter corresponding to a character.
+ *
+ * @c: the argument character
+ *
+ * Return: if the character is in [a-z], returns the corresponding upper case
+ * character. If the character does not represent a letter in [a-z], returns
+ * the input character unchanged.
+ */
 char _charup(const char c)
 {
 	if (c >= 'a' && c <= 'z')
