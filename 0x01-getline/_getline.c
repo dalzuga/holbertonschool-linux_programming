@@ -9,14 +9,14 @@
  */
 char *_getline(const int fd)
 {
-	int index;
-	char *s = NULL, *s2 __attribute__((unused)) = NULL;
+	char *s __attribute__((unused)) = NULL;
+	char *s2 __attribute__((unused)) = NULL;
 	char *buf = NULL;
-	int s_len = 0;
-	int buf_len = 0;
+	int s_len __attribute__((unused)) = 0;
+	int s2_count __attribute__ ((unused)) = 0;
+	int buf_len __attribute__((unused)) = 0;
 	int i = 0;
 	int count = 0;
-	int mult = 1;
 
 	while (1)
 	{
@@ -32,11 +32,11 @@ char *_getline(const int fd)
 			if (i >= READ_SIZE) /* if no new line (line is long) */
 			{
 				s2 = malloc(sizeof(char) * READ_SIZE);
-				s2 = read(fd, buf, READ_SIZE); /* read */
-				s_len = strlen(s);
-				buf = malloc(sizeof(char) * (s_len + READ_SIZE));
-				buf = strcat(s, s2);
-				buf_len = s_len + READ_SIZE;
+				s2_count = read(fd, buf, READ_SIZE); /* read */
+				s = malloc(sizeof(char) * (count + s2_count));
+				s = strcat(buf, s2);
+				printf("%s\n", s2);
+				exit(972);
 			}
 		}
 
