@@ -51,4 +51,10 @@ int _mstrcmp(const char *s1, const char *s2);
 /* _charup - returns uppercase letter corresponding to a character. */
 char _charup(const char c);
 
+/* ls_loop_lvl2 - inner loop */
+void ls_loop_lvl2(ls_struct *lss, int n, char **entry);
+
+/* bubble_sort - bubble sorts the entries */
+void bubble_sort(int n, char **entry);
+
 #endif
