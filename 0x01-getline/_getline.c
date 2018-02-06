@@ -32,10 +32,10 @@ char *_getline(const int fd)
 			if (i >= READ_SIZE) /* if no new line (line is long) */
 			{
 				s2 = malloc(sizeof(char) * READ_SIZE);
-				s2_count = read(fd, buf, READ_SIZE); /* read */
+				s2_count = read(fd, s2, READ_SIZE); /* read */
 				s = malloc(sizeof(char) * (count + s2_count));
 				s = strcat(buf, s2);
-				printf("%s\n", s2);
+				printf("%s", s);
 				exit(972);
 			}
 		}
