@@ -28,36 +28,20 @@ char *_getline(const int fd)
 
 		for (i = 0; buf[i] != '\n'; i++) /* look for new line */
 		{
-			/* Appends */
+			/* Appends: s = buf + s2; buf = s. */
 			if (i >= READ_SIZE) /* if no new line (line is long) */
 			{
 				s2 = malloc(sizeof(char) * READ_SIZE);
 				s2_count = read(fd, s2, READ_SIZE); /* read */
 				s = malloc(sizeof(char) * (count + s2_count));
 				s = strcat(buf, s2);
-				printf("%s", s);
-				exit(972);
+				buf = s;
+				count = strlen(buf);
 			}
 		}
-
-		/* 
-                 * for (i = 0; i < READ_SIZE; i++)
-		 * {
-		 * 	if (buf[i] == '\n') /\* go until you find a newline *\/
-		 * 	{
-		 * 		s = malloc(sizeof(char) * i);
-		 * 		multiplier = i/64;
-		 * 		s2 = malloc(sizeof(char) * READ_SIZE * multiplier);
-		 * 		strncpy(s, buf, i);
-		 * 		buf[i] = '\0'; /\* replace new line *\/
-		 * 		s[i] = '\0'; /\* replace new line *\/
-		 * 		return (s);
-		 * 	}
-		 * }
-                 */
 	}
 
-	printf("--------at newline------------:\n%s\n", buf);
+	printf("--------at newline------------:\n%s", buf);
 
 	return (NULL);
 }
