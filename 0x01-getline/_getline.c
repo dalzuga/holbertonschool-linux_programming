@@ -23,22 +23,28 @@ char *_getline(const int fd)
 			s = malloc(sizeof(char) * READ_SIZE);
 			s_count = read(fd, s, READ_SIZE);
 		}
-		if (s_count == 0)
+		if (s_count == 0) /* we've read the entire line */
 			break;
-		if (s[i] == '\n')
+		if (s[i] == '\n') /* if end of line, but not end of buffer */
 		{
 			seek_point = i;
 			seek_offset = s_count - i;
 			flag = 1;
 		}
+
+		/* we've picked up some of the next line */
 		if (flag && (seek_offset >= 0))
 		{
 			buf = malloc(sizeof(char) seek_offset);
 			strncat(buf, s[i+1]);
 		}
-		else 		/* seek_offset must be 0 */
+		else 		/*
+				 * (seek_offset must be 0) && (we haven't
+				 * picked up characters from the rest of the
+				 * line)
+				 */
 		{
-			break;
+			break;	/* this is the end of the line */
 		}
 	}
 
