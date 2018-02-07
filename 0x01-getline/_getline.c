@@ -48,7 +48,7 @@ char *_getline(const int fd)
 		{
 			buf = malloc(sizeof(char) seek_offset);
 
-			/* probably an "off by one" error here */
+			/* save the overflow in `buf` */
 			strncat(buf, s[i+1], seek_offset);
 		}
 		else 		/*
