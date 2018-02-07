@@ -43,6 +43,11 @@ char *_getline(const int fd)
                          * READ_SIZE.
                          */
 
+			/*
+                         * something is not right here. i need to do several
+			 * things, such as read into `s`, copy `buf` into s,
+			 * and not in that order.
+                         */
 			s = malloc(sizeof(char) * (seek_offset + READ_SIZE));
 			strncat(s, buf, seek_offset);
 
