@@ -30,10 +30,11 @@ char *_getline(const int fd)
 				       * these characters are at buf */
 		{
 			/*
-			 * i should be 0 here, because, we're reading a
-			 * prolongation of the line, which starts in `s`
+			 * i should start at `seek_offset + 1` here, because
+			 * we're reading a prolongation of the line, which
+			 * starts in `seek_offset + s` (pointer arithmetic)
 			 */
-			i = 0;
+			i = seek_offset + 1;
 
 			/*
                          * we know that s needs to be big enough to contain the
@@ -52,6 +53,7 @@ char *_getline(const int fd)
 			 * needs TBD if this affects the logic below.
                          */
 		}
+
 		if (s_count == 0) /* we've read the entire line */
 			break;
 		if (s[i] == '\n') /* if end of line, but not end of buffer */
