@@ -10,18 +10,47 @@
 char *_getline(const int fd)
 {
 	/* trying something different */
-	static int seek;
-	int i = 0, j = 0;
-	char *s1 = NULL, *s2 = NULL, *s3 = NULL;
+	static int seek_point, seek_offset;
+	static char *buf = NULL;
+	int i = 0, j = 0, s_count = 0, flag = 0;
+	char *s = NULL;
 
-	s1 = "hello";
-	s2 = "hi";
-	s3 = malloc(sizeof(char) * (strlen(s1) + strlen(s2)));
-	strcat(s3, s1);
-	strcat(s3, s2);
+	/* i must start at seek_point + seek_offset */
+	for (i = 0; ; i++)
+	{
+		if (i == 0)
+		{
+			s = malloc(sizeof(char) * READ_SIZE);
+			s_count = read(fd, s, READ_SIZE);
+		}
+		if (s_count == 0)
+			break;
+		if (s[i] == '\n')
+		{
+			seek_point = i;
+			seek_offset = s_count - i;
+			flag = 1;
+		}
+		if (flag && (seek_offset >= 0))
+		{
+			buf = malloc(sizeof(char) seek_offset);
+			strncat(buf, s[i+1]);
+		}
+		else 		/* seek_offset must be 0 */
+		{
+			break;
+		}
+	}
 
-	printf("%s\n", s3);
-
+	/*
+         * s1 = "hello";
+	 * s2 = "hi";
+	 * s3 = malloc(sizeof(char) * (strlen(s1) + strlen(s2)));
+	 * strcat(s3, s1);
+	 * strcat(s3, s2);
+	 *
+	 * printf("%s\n", s3);
+         */
 
 	/* 
          * char *s __attribute__((unused)) = NULL;
