@@ -44,6 +44,13 @@ char *_getline(const int fd)
 
 			s = malloc(sizeof(char) * (seek_offset + READ_SIZE));
 			strncat(s, buf, seek_offset);
+
+			/*
+                         * at this point it occurred to me that i must not
+			 * start at 0 and the comment at (34,53) is
+			 * incorrect. need to fix line 36 and its comment. it
+			 * needs TBD if this affects the logic below.
+                         */
 		}
 		if (s_count == 0) /* we've read the entire line */
 			break;
