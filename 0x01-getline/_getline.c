@@ -26,7 +26,11 @@ char *_getline(const int fd)
 				  * c) if (b), then these characters are at buf
 				  */
 		{
-			i = seek_point + seek_offset;
+			/*
+			 * i should be 0 here, because, we're reading a
+			 * prolongation of the line, which starts in `s`
+			 */
+			i = 0;
 		}
 
 		if (i == 0)
@@ -39,7 +43,14 @@ char *_getline(const int fd)
 		if (s[i] == '\n') /* if end of line, but not end of buffer */
 		{
 			seek_point = i;
-			seek_offset = s_count - i;
+			seek_offset = s_count - i; /*
+						    * this is untested code. it
+						    * represents the chunk past
+						    * the new line which needs
+						    * to be put in `buf`. the
+						    * offset is likely
+						    * off-by-one
+						    */
 			flag = 1;
 		}
 
@@ -50,6 +61,8 @@ char *_getline(const int fd)
 
 			/* save the overflow in `buf` */
 			strncat(buf, s[i+1], seek_offset);
+			break; 	/* and we're done. since `buf` is a static, it
+				 * will remain in the function */
 		}
 		else 		/*
 				 * (seek_offset must be 0) => (we haven't
