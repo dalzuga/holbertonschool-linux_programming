@@ -12,13 +12,13 @@ char *_getline(const int fd)
 	/* trying something different */
 	static int seek_point, seek_offset;
 	static char *buf = NULL;
-	int i = 0, j = 0, s_count = 0, flag = 0;
+	int i = 0, j = 0, s_count = 0, s_count2 = 0, flag = 0;
 	char *s = NULL;
 
 	/* i must start at seek_point + seek_offset */
 	for (i = 0; ; i++)
 	{
-		if (i == 0)
+		if (i == 0)	/* if we're at the first character */
 		{
 			s = malloc(sizeof(char) * READ_SIZE);
 			s_count = read(fd, s, READ_SIZE);
@@ -50,6 +50,7 @@ char *_getline(const int fd)
                          */
 			s = malloc(sizeof(char) * (seek_offset + READ_SIZE));
 			strncat(s, buf, seek_offset);
+			s_count = read(fd, &s[i], READ_SIZE);
 
 			/*
                          * at this point it occurred to me that i must not
