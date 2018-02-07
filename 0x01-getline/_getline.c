@@ -18,25 +18,32 @@ char *_getline(const int fd)
 	/* i must start at seek_point + seek_offset */
 	for (i = 0; ; i++)
 	{
-		if (buf != NULL) /*
-				  * this means:
-				  * a) this is not the first iteration, and,
-				  * b) we have picked up some characters in the
-				  * line after the previous iteration
-				  * c) if (b), then these characters are at buf
-				  */
+		if (i == 0)
+		{
+			s = malloc(sizeof(char) * READ_SIZE);
+			s_count = read(fd, s, READ_SIZE);
+		}
+		else if (buf != NULL) /* this means: a) this is not the first
+				       * iteration, and, b) we have picked up
+				       * some characters in the line after the
+				       * previous iteration c) if (b), then
+				       * these characters are at buf */
 		{
 			/*
 			 * i should be 0 here, because, we're reading a
 			 * prolongation of the line, which starts in `s`
 			 */
 			i = 0;
-		}
 
-		if (i == 0)
-		{
-			s = malloc(sizeof(char) * READ_SIZE);
-			s_count = read(fd, s, READ_SIZE);
+			/*
+                         * we know that s needs to be big enough to contain the
+                         * previous `buf` and the next read. the length of
+                         * `buf` is just `seek_offset`, so we add that with
+                         * READ_SIZE.
+                         */
+
+			s = malloc(sizeof(char) * (seek_offset + READ_SIZE));
+			strncat(s, buf, seek_offset);
 		}
 		if (s_count == 0) /* we've read the entire line */
 			break;
