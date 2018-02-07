@@ -36,7 +36,9 @@ char *_getline(const int fd)
 		if (flag && (seek_offset >= 0))
 		{
 			buf = malloc(sizeof(char) seek_offset);
-			strncat(buf, s[i+1]);
+
+			/* probably an "off by one" error here */
+			strncat(buf, s[i+1], seek_offset);
 		}
 		else 		/*
 				 * (seek_offset must be 0) && (we haven't
