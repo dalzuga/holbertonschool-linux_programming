@@ -18,6 +18,16 @@ char *_getline(const int fd)
 	/* i must start at seek_point + seek_offset */
 	for (i = 0; ; i++)
 	{
+		if (buf != NULL) /*
+				  * this means:
+				  * a) this is not the first iteration, and,
+				  * b) we have picked up some characters in the
+				  * line after the previous iteration
+				  */
+		{
+			i = seek_point + seek_offset;
+		}
+
 		if (i == 0)
 		{
 			s = malloc(sizeof(char) * READ_SIZE);
@@ -41,7 +51,7 @@ char *_getline(const int fd)
 			strncat(buf, s[i+1], seek_offset);
 		}
 		else 		/*
-				 * (seek_offset must be 0) && (we haven't
+				 * (seek_offset must be 0) => (we haven't
 				 * picked up characters from the rest of the
 				 * line)
 				 */
