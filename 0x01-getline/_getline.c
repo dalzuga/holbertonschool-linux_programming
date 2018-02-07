@@ -23,6 +23,7 @@ char *_getline(const int fd)
 				  * a) this is not the first iteration, and,
 				  * b) we have picked up some characters in the
 				  * line after the previous iteration
+				  * c) if (b), then these characters are at buf
 				  */
 		{
 			i = seek_point + seek_offset;
