@@ -9,39 +9,55 @@
  */
 char *_getline(const int fd)
 {
-	char *s __attribute__((unused)) = NULL;
-	char *s2 __attribute__((unused)) = NULL;
-	char *buf = NULL;
-	int s_len __attribute__((unused)) = 0;
-	int s2_count __attribute__ ((unused)) = 0;
-	int buf_len __attribute__((unused)) = 0;
-	int i = 0;
-	int count = 0;
+	/* trying something different */
+	static int seek;
+	int i = 0, j = 0;
+	char *s1 = NULL, *s2 = NULL, *s3 = NULL;
 
-	while (1)
-	{
-		buf = malloc(sizeof(char) * READ_SIZE);
-		count = read(fd, buf, READ_SIZE);
+	s1 = "hello";
+	s2 = "hi";
+	s3 = malloc(sizeof(char) * (strlen(s1) + strlen(s2)));
+	strcat(s3, s1);
+	strcat(s3, s2);
 
-		if (count == 0) /* end of file */
-			break;
+	printf("%s\n", s3);
 
-		for (i = 0; buf[i] != '\n'; i++) /* look for new line */
-		{
-			/* Appends: s = buf + s2; buf = s. */
-			if (i >= READ_SIZE) /* if no new line (line is long) */
-			{
-				s2 = malloc(sizeof(char) * READ_SIZE);
-				s2_count = read(fd, s2, READ_SIZE); /* read */
-				s = malloc(sizeof(char) * (count + s2_count));
-				s = strcat(buf, s2);
-				buf = s;
-				count = strlen(buf);
-			}
-		}
-	}
 
-	printf("--------at newline------------:\n%s", buf);
+	/* 
+         * char *s __attribute__((unused)) = NULL;
+	 * char *s2 __attribute__((unused)) = NULL;
+	 * char *buf = NULL;
+	 * int s_len __attribute__((unused)) = 0;
+	 * int s2_count __attribute__ ((unused)) = 0;
+	 * int buf_len __attribute__((unused)) = 0;
+	 * int i = 0;
+	 * int count = 0;
+	 * 
+	 * while (1)
+	 * {
+	 * 	buf = malloc(sizeof(char) * READ_SIZE);
+	 * 	count = read(fd, buf, READ_SIZE);
+	 * 
+	 * 	if (count == 0) /\* end of file *\/
+	 * 		break;
+	 * 
+	 * 	for (i = 0; buf[i] != '\n'; i++) /\* look for new line *\/
+	 * 	{
+	 * 		/\* Appends: s = buf + s2; buf = s. *\/
+	 * 		if (i >= READ_SIZE) /\* if no new line (line is long) *\/
+	 * 		{
+	 * 			s2 = malloc(sizeof(char) * READ_SIZE);
+	 * 			s2_count = read(fd, s2, READ_SIZE); /\* read *\/
+	 * 			s = malloc(sizeof(char) * (count + s2_count));
+	 * 			s = strcat(buf, s2);
+	 * 			buf = s;
+	 * 			count = strlen(buf);
+	 * 		}
+	 * 	}
+	 * }
+	 * 
+	 * printf("--------at newline------------:\n%s", buf);
+         */
 
 	return (NULL);
 }
