@@ -11,7 +11,7 @@ char *_getline(const int fd)
 {
 	/* trying something different */
 
-	static char *s = NULL;
+	static char *s __attribute__((unused)) = NULL;
 
 	s = getfirstline(fd);
 

@@ -8,7 +8,7 @@
  *
  * Return: the index of the character in the string.
  */
-int *strgetci(char *s, char c)
+int strgetci(char *s, char c)
 {
 	int i;
 

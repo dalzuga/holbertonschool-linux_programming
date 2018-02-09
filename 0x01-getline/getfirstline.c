@@ -9,11 +9,11 @@
  */
 char *getfirstline(const int fd)
 {
-	int count = 0, s2_count = 0, i = 0;
+	int count = 0, s2_count = 0, i = 0, __attribute__((unused)) seek_point = 0;
 	char *s = NULL, *s2 = NULL;
 
-	s = malloc(sizeof(char) * BUFFER_SIZE);
-	count = read(fd, s, BUFFER_SIZE);
+	s = malloc(sizeof(char) * READ_SIZE);
+	count = read(fd, s, READ_SIZE);
 
 	if ((count == 0) || s == NULL)
 		return (NULL);
@@ -22,25 +22,25 @@ char *getfirstline(const int fd)
 	{
 		if (strnchknl(s, count)) /* if there is a new line */
 		{
-			seek_point = strgetci(); /* store the index */
+			seek_point = strgetci(s, '\n'); /* store the index */
 			break;
 		}
 		else		/* read more characters from the file into s */
 		{
 			/* make bigger chunk of memory in variable s2 */
-			s2 = malloc(sizeof(char) * (count + BUFFER_SIZE));
+			s2 = malloc(sizeof(char) * (count + READ_SIZE));
 			/* copy s into s2 */
 			strncat(s2, s, count);
 			/* read more into s2 */
-			s2_count = read(fd, s + count, BUFFER_SIZE);
+			s2_count = read(fd, s2 + count, READ_SIZE);
 			free(s);
 			/* remake s with size `count + s2_count` */
-			s = malloc(sizeof(char) count + s2_count);
+			s = malloc(sizeof(char) * (count + s2_count));
 			strncat(s, s2, count + s2_count);
 			/* update count */
 			count += s2_count;
 		}
 	}
 
-	
+	return (NULL);
 }

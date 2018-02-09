@@ -11,6 +11,10 @@
 
 char *_getline(const int fd);
 
-char *_getfirstline(const int fd);
+char *getfirstline(const int fd);
+
+int strnchknl(const char *s, int n);
+
+int strgetci(char *s, char c);
 
 #endif
