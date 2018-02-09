@@ -27,14 +27,18 @@ char *getfirstline(const int fd)
 		}
 		else		/* read more characters from the file into s */
 		{
-			/* make tmp variable s2 */
+			/* make bigger chunk of memory in variable s2 */
 			s2 = malloc(sizeof(char) * (count + BUFFER_SIZE));
-			/*  */
+			/* copy s into s2 */
 			strncat(s2, s, count);
+			/* read more into s2 */
 			s2_count = read(fd, s + count, BUFFER_SIZE);
 			free(s);
+			/* remake s with size `count + s2_count` */
 			s = malloc(sizeof(char) count + s2_count);
 			strncat(s, s2, count + s2_count);
+			/* update count */
+			count += s2_count;
 		}
 	}
 
