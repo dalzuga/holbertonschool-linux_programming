@@ -10,9 +10,9 @@
 char *getotherlines(const int fd, int *seek_point, char *s)
 {
 	char *buf = s + *seek_point;
-	int prev_seek_point = seek_point;
+	int prev_seek_point = *seek_point;
 
-	if (strnchk(buf, count, '\n')) /* if there is a new line */
+	if (strnchkc(buf, count, '\n')) /* if there is a new line */
 	{
 		*seek_point = strgetci(buf, '\n'); /* store the index */
 		return (buf);

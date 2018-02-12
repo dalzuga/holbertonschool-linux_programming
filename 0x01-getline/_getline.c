@@ -13,8 +13,9 @@ char *_getline(const int fd)
 	char *s __attribute__((unused)) = NULL;
 	static int seek_point;
 	/* char *line = NULL; */
+	int count = 0;
 
-	s = getfirstline(fd, &seek_point);
+	s = getfirstline(fd, &seek_point, &count);
 
 	printf("_getline: %s", s);
 	printf("seek_point: %d\n", seek_point);
@@ -25,7 +26,6 @@ char *_getline(const int fd)
 		line = getotherlines(fd, &seek_point, &s);
 		if (line == NULL)
 			break;
-
 	}
 
 	return (NULL);
