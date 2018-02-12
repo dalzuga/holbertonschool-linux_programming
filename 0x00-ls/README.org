@@ -1,9 +1,0 @@
-This is a C implementation of the ~ls~ linux command.
-
-To compile this program, use
-
-#+BEGIN_EXAMPLE
-gcc -Wall -Werror -Wextra -pedantic *.c -o hls
-#+END_EXAMPLE
-
-under ~gcc 4.8.4~.
