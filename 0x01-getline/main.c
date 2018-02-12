@@ -15,7 +15,7 @@ int main(void)
 	int fd;
 	char *line;
 
-	fd = open("main_fake.c", 0);
+	fd = open("main_fake.txt", 0);
 	while ((line = _getline(fd)))
 	{
 		printf("%s\n", line);
