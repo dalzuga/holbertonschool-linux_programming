@@ -15,7 +15,7 @@ char *_getline(const int fd)
 
 	s = getfirstline(fd);
 
-	printf("_getline: %s\n", s);
+	printf("_getline: %s", s);
 
 	return (NULL);
 }

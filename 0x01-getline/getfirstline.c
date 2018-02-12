@@ -39,7 +39,6 @@ char *getfirstline(const int fd)
 			strncat(s, s2, count + s2_count);
 			/* update count */
 			count += s2_count;
-			printf("%s", s);
 		}
 	}
 
