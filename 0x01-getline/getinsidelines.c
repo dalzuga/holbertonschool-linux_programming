@@ -7,7 +7,7 @@
  *
  * Return: The line read. NULL if there are no lines remaining; NULL on error.
  */
-char *getinsidelines(const int fd, int *seek_point, char *s, int *count)
+char *getinsidelines(int *seek_point, char *s, int *count)
 {
 	char *buf = s + *seek_point;
 	int prev_seek_point = *seek_point;
@@ -18,16 +18,22 @@ char *getinsidelines(const int fd, int *seek_point, char *s, int *count)
 		*count = *seek_point - prev_seek_point;
 		return (buf);
 	}
+	else if (buf != NULL)
+	{
+		return (s);
+	}
 	else
 	{
-		free(s);
+		return (NULL);
 	}
 
-	s = malloc(sizeof(char) * READ_SIZE);
-	*count = read(fd, s, READ_SIZE);
-
-	if ((*count == 0) || s == NULL)
-		return (NULL);
-
-	return (s);
+	/* 
+         * s = malloc(sizeof(char) * READ_SIZE);
+	 * *count = read(fd, s, READ_SIZE);
+	 * 
+	 * if ((*count == 0) || s == NULL)
+	 * 	return (NULL);
+	 * 
+	 * return (s);
+         */
 }

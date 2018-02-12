@@ -23,7 +23,7 @@ char *_getline(const int fd)
 
 	while (1)
 	{
-		line = getinsidelines(fd, &seek_point, s, &count);
+		line = getinsidelines(&seek_point, s, &count);
 		if (line == NULL)
 			break;
 	}

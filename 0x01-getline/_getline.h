@@ -17,6 +17,6 @@ int strnchkc(const char *s, int n, char c);
 
 int strgetci(char *s, char c);
 
-char *getinsidelines(const int fd, int *seek_point, char *s, int *);
+char *getinsidelines(int *seek_point, char *s, int *);
 
 #endif
