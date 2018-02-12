@@ -10,12 +10,13 @@
 char *_getline(const int fd)
 {
 	/* trying something different */
-
-	static char *s __attribute__((unused)) = NULL;
+	char *s __attribute__((unused)) = NULL;
+	static char *line;
 
 	s = getfirstline(fd);
 
 	printf("_getline: %s", s);
+	printf("end\n");
 
 	return (NULL);
 }
