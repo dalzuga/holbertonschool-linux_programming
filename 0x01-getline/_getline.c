@@ -12,10 +12,10 @@ char *_getline(const int fd)
 	/* trying something different */
 	char *s __attribute__((unused)) = NULL;
 	static int seek_point;
-	/* char *line = NULL; */
+	char *line = NULL;
 	int count = 0;
 
-	s = getfirstline(fd, &seek_point, &count);
+	s = getmainline(fd, &seek_point, &count);
 
 	printf("_getline: %s", s);
 	printf("seek_point: %d\n", seek_point);
@@ -23,7 +23,7 @@ char *_getline(const int fd)
 
 	while (1)
 	{
-		line = getotherlines(fd, &seek_point, &s);
+		line = getinsidelines(fd, &seek_point, s, &count);
 		if (line == NULL)
 			break;
 	}

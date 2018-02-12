@@ -1,13 +1,13 @@
 #include "_getline.h"
 
 /**
- * getfirstline - reads a string with at least one line from a file
+ * getmainline - reads a string with at least one line from a file
  *
  * @fd: the file descriptor
  *
  * Return: The line read. NULL if there are no lines remaining; NULL on error.
  */
-char *getfirstline(const int fd, int *seek_point, int *count)
+char *getmainline(const int fd, int *seek_point, int *count)
 {
 	int s2_count = 0, i = 0;
 	char *s = NULL, *s2 = NULL;
