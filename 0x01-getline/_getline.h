@@ -11,9 +11,9 @@
 
 char *_getline(const int fd);
 
-char *getfirstline(const int fd);
+char *getfirstline(const int fd, int *seek_point);
 
-int strnchknl(const char *s, int n);
+int strnchkc(const char *s, int n, char c);
 
 int strgetci(char *s, char c);
 

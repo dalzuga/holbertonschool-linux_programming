@@ -7,9 +7,9 @@
  *
  * Return: The line read. NULL if there are no lines remaining; NULL on error.
  */
-char *getfirstline(const int fd)
+char *getfirstline(const int fd, int *seek_point)
 {
-	int count = 0, s2_count = 0, i = 0, __attribute__((unused)) seek_point = 0;
+	int count = 0, s2_count = 0, i = 0;
 	char *s = NULL, *s2 = NULL;
 
 	s = malloc(sizeof(char) * READ_SIZE);
@@ -20,9 +20,9 @@ char *getfirstline(const int fd)
 
 	for (i = 1; ; i++)
 	{
-		if (strnchknl(s, count)) /* if there is a new line */
+		if (strnchkc(s, count, '\n')) /* if there is a new line */
 		{
-			seek_point = strgetci(s, '\n'); /* store the index */
+			*seek_point = strgetci(s, '\n'); /* store the index */
 			break;
 		}
 		else		/* read more characters from the file into s */
