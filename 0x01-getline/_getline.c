@@ -20,12 +20,13 @@ char *_getline(const int fd)
 	printf("seek_point: %d\n", seek_point);
 	printf("end\n");
 
-	/* 
-         * while (1)
-	 * {
-	 * 	line = getotherlines(fd, &seek_point, &s);
-	 * }
-         */
+	while (1)
+	{
+		line = getotherlines(fd, &seek_point, &s);
+		if (line == NULL)
+			break;
+
+	}
 
 	return (NULL);
 }
