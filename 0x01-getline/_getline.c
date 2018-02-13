@@ -16,7 +16,7 @@ char *_getline(const int fd)
 	int count = 0, ts_count = 0;
 
 	/* seek_point is just the first '\n' */
-	s = getfirstline(fd, &seek_point, &count, &ts_count);
+	s = getfirstline(fd, &seek_point, &count);
 
 	printf("_getline: %s", s);
 	printf("seek_point: %d\n", seek_point);
@@ -27,7 +27,7 @@ char *_getline(const int fd)
 
 	while (1)
 	{
-		line = getinsidelines(fd, &seek_point, s, &count);
+		line = getinsidelines(&seek_point, s, &count);
 		if (line == NULL) /* broke cleanly */
 			break;
 		printf("%s", line);
