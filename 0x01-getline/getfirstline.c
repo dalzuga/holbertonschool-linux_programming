@@ -7,7 +7,7 @@
  *
  * Return: The line read. NULL if there are no lines remaining; NULL on error.
  */
-char *getmainline(const int fd, int *seek_point, int *count)
+char *getfirstline(const int fd, int *seek_point, int *count)
 {
 	int s2_count = 0, i = 0;
 	char *s = NULL, *s2 = NULL;
@@ -33,6 +33,8 @@ char *getmainline(const int fd, int *seek_point, int *count)
 			strncat(s2, s, *count);
 			/* read more into s2 */
 			s2_count = read(fd, s2 + *count, READ_SIZE);
+			if (s2_count == 0)
+				break;
 			free(s);
 			/* remake s with size `*count + s2_count` */
 			s = malloc(sizeof(char) * (*count + s2_count));

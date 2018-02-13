@@ -31,10 +31,6 @@ char *getinsidelines(const int fd, int *seek_point, char *s, int *count)
 		buf_count = count - seek_point; /* calculate trail length */
 		s2 = malloc(sizeof(char) * (buf_count + READ_SIZE));
 		strncpy(s2, buf, buf_count);
-		count = read(fd, s2 + buf_count, READ_SIZE);
-		free(s);
-		*seek_point = 0;
-		return (getinsidelines(seek_point, s2, count));
 	}
 	else
 	{
