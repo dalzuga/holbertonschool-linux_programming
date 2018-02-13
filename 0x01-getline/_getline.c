@@ -19,13 +19,16 @@ char *_getline(const int fd)
 
 	printf("_getline: %s", s);
 	printf("seek_point: %d\n", seek_point);
-	printf("end\n");
+
+	line = malloc(sizeof(char) * seek_point);
+	strncpy(line, s, seek_point);
 
 	while (1)
 	{
-		line = getinsidelines(&seek_point, s, &count);
+		line = getinsidelines(fd, &seek_point, s, &count);
 		if (line == NULL)
 			break;
+		printf("%s", line);
 	}
 
 	return (NULL);

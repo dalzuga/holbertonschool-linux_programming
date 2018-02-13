@@ -7,10 +7,18 @@
  *
  * Return: The line read. NULL if there are no lines remaining; NULL on error.
  */
-char *getinsidelines(int *seek_point, char *s, int *count)
+char *getinsidelines(const int fd, int *seek_point, char *s, int *count)
 {
-	char *buf = s + *seek_point;
-	int prev_seek_point = *seek_point;
+	char *buf = s + *seek_point, *s2 = NULL;
+	int prev_seek_point = *seek_point, buf_count = 0;
+
+	/*
+         * while (buf == '\n')
+	 * {
+	 * 	buf++;
+	 * 	(*seek_point)++;
+	 * }
+         */
 
 	if (strnchkc(buf, *count, '\n')) /* if there is a new line */
 	{
@@ -20,20 +28,16 @@ char *getinsidelines(int *seek_point, char *s, int *count)
 	}
 	else if (buf != NULL)
 	{
-		return (s);
+		buf_count = count - seek_point; /* calculate trail length */
+		s2 = malloc(sizeof(char) * (buf_count + READ_SIZE));
+		strncpy(s2, buf, buf_count);
+		count = read(fd, s2 + buf_count, READ_SIZE);
+		free(s);
+		*seek_point = 0;
+		return (getinsidelines(seek_point, s2, count));
 	}
 	else
 	{
 		return (NULL);
 	}
-
-	/* 
-         * s = malloc(sizeof(char) * READ_SIZE);
-	 * *count = read(fd, s, READ_SIZE);
-	 * 
-	 * if ((*count == 0) || s == NULL)
-	 * 	return (NULL);
-	 * 
-	 * return (s);
-         */
 }
