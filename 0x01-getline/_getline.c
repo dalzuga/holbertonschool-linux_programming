@@ -35,5 +35,7 @@ char *_getline(const int fd)
 
 	/* broke messily, there are trailing chars from next line */
 
+	/* need a function that will handle previous trail and cat it */
+
 	return (NULL);
 }
