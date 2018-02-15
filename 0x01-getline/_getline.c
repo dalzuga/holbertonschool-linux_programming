@@ -9,33 +9,44 @@
  */
 char *_getline(const int fd)
 {
-	/* trying something different */
-	char *s = NULL;
-	static int seek_point;
+	static char *s = NULL, *ts = NULL;
 	char *line = NULL;
-	int count = 0, ts_count = 0;
+	static int s_count, si, ts_count, tsi;
+	char *s2 = NULL;
+	int s2_count = 0;
+	int total;
 
-	/* seek_point is just the first '\n' */
-	s = getfirstline(fd, &seek_point, &count);
-
-	printf("_getline: %s", s);
-	printf("seek_point: %d\n", seek_point);
-
-	line = malloc(sizeof(char) * (ts_count + seek_point));
-
-	strncpy(line, s, seek_point);
-
-	while (1)
+	/* ts might contain '\n' */
+	if (strnchkc(ts, ts_count, '\n')) /* check for '\n' in ts */
 	{
-		line = getinsidelines(&seek_point, s, &count);
-		if (line == NULL) /* broke cleanly */
-			break;
-		printf("%s", line);
+		tsi = strgetci(ts, ts_count, '\n');
+		line = malloc(sizeof(char) * (tsi - ts));
+		strncpy(line, ts, tsi-ts);
+		line[tsi - ts - 1] = '\0';
+		return (line);
 	}
 
-	/* broke messily, there are trailing chars from next line */
+	/* ts does not contain '\n' */
+	if (strnchkc(s, s_count, '\n')) /* check for '\n' in s */
+	{
+		tsi = strgetci(ts, '\n'); /* get the index of '\n' */
+		line = malloc(sizeof(char) * (ts_count + (si - s)));
+		strncpy(line, ts, ts_count);
+		strncpy(line, ts + ts_count, si - s);
 
-	/* need a function that will handle previous trail and cat it */
+		line[ts_count + (si - s) = 1] = '\0';
 
-	return (NULL);
+		free(ts);
+		ts_count = s_count - si;
+		ts = malloc(sizeof(char) * ts_count);
+		strncpy(ts, s, ts_count);
+		free(s);
+		return (line);
+	}
+	else			/* if we need more characters in s */
+	{
+		while (strnchkc(s2, s2_count, '\n' == 0))
+		{
+		}
+	}
 }
