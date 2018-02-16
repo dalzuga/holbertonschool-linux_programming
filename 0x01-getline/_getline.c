@@ -47,6 +47,17 @@ char *_getline(const int fd)
 	{
 		while (strnchkc(s2, s2_count, '\n' == 0))
 		{
+			s2 = malloc(sizeof(char) * (s_count + READ_SIZE));
+			s2_count = read(fd, s2 + s_count, READ_SIZE);
+			if (s2_count == 0)
+			{
+				line = malloc(sizeof(char) * (ts_count + s_count + 1));
+				strncat(line, ts_count, ts);
+				strncat(line + ts_count, s_count, s);
+				line[ts_count + s_count] = '\0';
+
+				return (line);
+			}
 		}
 	}
 }
