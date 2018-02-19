@@ -11,10 +11,12 @@
 
 char *_getline(const int fd);
 
-char *getfirstline(const int fd, int *seek_point);
+char *getfirstline(const int fd, int *seek_point, int *count);
 
 int strnchkc(const char *s, int n, char c);
 
 int strgetci(char *s, char c);
+
+char *getinsidelines(int *seek_point, char *s, int *);
 
 #endif
