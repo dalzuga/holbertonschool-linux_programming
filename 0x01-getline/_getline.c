@@ -16,6 +16,9 @@ char *_getline(const int fd)
 	int s2_count = 0;
 	int total;
 
+	if (si == -1)		/* if we're done */
+		return (NULL);
+
 	/* ts might contain '\n' */
 	if (strnchkc(ts, ts_count, '\n')) /* check for '\n' in ts */
 	{
@@ -49,13 +52,14 @@ char *_getline(const int fd)
 		{
 			s2 = malloc(sizeof(char) * (s_count + READ_SIZE));
 			s2_count = read(fd, s2 + s_count, READ_SIZE);
-			if (s2_count == 0)
+			if (s2_count == 0) /* we're done */
 			{
 				line = malloc(sizeof(char) * (ts_count + s_count + 1));
 				strncat(line, ts_count, ts);
 				strncat(line + ts_count, s_count, s);
 				line[ts_count + s_count] = '\0';
 
+				si = -1; /* signal that we're done */
 				return (line);
 			}
 		}
