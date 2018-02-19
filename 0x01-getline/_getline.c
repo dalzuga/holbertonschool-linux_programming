@@ -26,18 +26,19 @@ char *_getline(const int fd)
 		line = malloc(sizeof(char) * (tsi - ts));
 		strncpy(line, ts, tsi-ts);
 		line[tsi - ts - 1] = '\0';
+		ts_count = ts_count - tsi;
 		return (line);
 	}
 
 	/* ts does not contain '\n' */
 	if (strnchkc(s, s_count, '\n')) /* check for '\n' in s */
 	{
-		tsi = strgetci(ts, '\n'); /* get the index of '\n' */
+		si = strgetci(s, '\n'); /* get the index of '\n' */
 		line = malloc(sizeof(char) * (ts_count + (si - s)));
 		strncpy(line, ts, ts_count);
 		strncpy(line, ts + ts_count, si - s);
 
-		line[ts_count + (si - s) = 1] = '\0';
+		line[ts_count + (si - s) - 1] = '\0';
 
 		free(ts);
 		ts_count = s_count - si;
