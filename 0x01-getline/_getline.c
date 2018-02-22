@@ -37,9 +37,9 @@ char *_getline(const int fd)
 		si = strgetci(s, '\n'); /* get the index of '\n' */
 		line = malloc(sizeof(char) * (ts_count + si));
 		strncpy(line, ts, ts_count);
-		strncpy(line + ts_count, s, si - s);
+		strncpy(line + ts_count, s, si);
 
-		line[ - 1] = '\0';
+		line[ts_count + si] = '\0'; /* replace '\n' with '\0' */
 
 		free(ts);
 		ts_count = s_count - si;
