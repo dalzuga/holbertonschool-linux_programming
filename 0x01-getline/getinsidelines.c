@@ -36,4 +36,6 @@ char *getinsidelines(int *seek_point, char *s, int *count)
 	{
 		return (NULL);
 	}
+
+	return (NULL);
 }

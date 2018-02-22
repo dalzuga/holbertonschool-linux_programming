@@ -22,11 +22,12 @@ char *_getline(const int fd)
 	/* ts might contain '\n' */
 	if (strnchkc(ts, ts_count, '\n')) /* check for '\n' in ts */
 	{
-		tsi = strgetci(ts, ts_count, '\n');
-		line = malloc(sizeof(char) * (tsi - ts));
-		strncpy(line, ts, tsi-ts);
-		line[tsi - ts - 1] = '\0';
+		tsi = strgetci(ts, '\n');
+		line = malloc(sizeof(char) * tsi);
+		strncpy(line, ts, tsi);
+		line[tsi - 1] = '\0';
 		ts_count = ts_count - tsi;
+		ts = ts + tsi;	/* advance ts pointer */
 		return (line);
 	}
 
@@ -34,11 +35,11 @@ char *_getline(const int fd)
 	if (strnchkc(s, s_count, '\n')) /* check for '\n' in s */
 	{
 		si = strgetci(s, '\n'); /* get the index of '\n' */
-		line = malloc(sizeof(char) * (ts_count + (si - s)));
+		line = malloc(sizeof(char) * (ts_count + si));
 		strncpy(line, ts, ts_count);
-		strncpy(line, ts + ts_count, si - s);
+		strncpy(line + ts_count, s, si - s);
 
-		line[ts_count + (si - s) - 1] = '\0';
+		line[ - 1] = '\0';
 
 		free(ts);
 		ts_count = s_count - si;
