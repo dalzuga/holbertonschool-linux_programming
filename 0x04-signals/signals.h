@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
-#include <signal.h> 		/* signal(2) */
+#include <signal.h>		/* signal(2) */
 
 /* handle_signal - handles a signal */
 int handle_signal(void);
