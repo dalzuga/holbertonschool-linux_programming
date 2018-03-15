@@ -12,4 +12,7 @@ int handle_signal(void);
 /* interrupt_handler - function called upon receiving a signal */
 void interrupt_handler(int signum);
 
+/* current_handler_signal - gets the handler of the signal */
+void (*current_handler_signal(void))(int);
+
 #endif
