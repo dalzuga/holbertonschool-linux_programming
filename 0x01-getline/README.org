@@ -1,9 +1,0 @@
-This is a C implementation of the ~getline~ function in the standard library.
-
-To compile this program, use
-
-#+BEGIN_EXAMPLE
-gcc -Wall -Wextra -Werror -pedantic main.c _getline.c
-#+END_EXAMPLE
-
-under ~gcc 4.8.4~.
