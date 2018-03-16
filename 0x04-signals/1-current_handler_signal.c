@@ -9,5 +9,5 @@
  */
 void (*current_handler_signal(void))(int signum)
 {
-	
+	return (signal(SIGINT, SIG_DFL));
 }
