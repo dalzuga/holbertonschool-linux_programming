@@ -18,4 +18,7 @@ void (*current_handler_signal(void))(int);
 /* handle_sigaction - sets a handler for SIGINT */
 int handle_sigaction(void);
 
+/* interrupt_handler2 - function called upon receiving a signal */
+void interrupt_handler2(int signum);
+
 #endif

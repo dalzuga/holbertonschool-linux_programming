@@ -9,17 +9,21 @@ int handle_sigaction(void)
 {
 	struct sigaction sa;
 
-	sa.sa_handler = print_hello2;
+	sa.sa_handler = interrupt_handler2;
+	if (sigaction(SIGINT, &sa, NULL) == -1)
+		return (-1);
+
+	return (0);
 }
 
 /**
- * print_hello2 - prints "Hello :)" and ignores the parameter
+ * interrupt_handler2 - function called upon receiving a signal
  *
- * @signum: this parameter holds the number associated with the signal.
+ * @signum: the signal number passed
  *
  * Return: Nothing.
  */
-void print_hello2(int signum __attribute__((unused)))
+void interrupt_handler2(int signum)
 {
-	printf("Hello :)\n");
+	printf("Gotcha! [%d]\n", signum);
 }
