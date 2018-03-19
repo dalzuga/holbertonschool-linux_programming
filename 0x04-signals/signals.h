@@ -15,4 +15,7 @@ void interrupt_handler(int signum);
 /* current_handler_signal - gets the handler of the signal */
 void (*current_handler_signal(void))(int);
 
+/* handle_sigaction - sets a handler for SIGINT */
+int handle_sigaction(void);
+
 #endif

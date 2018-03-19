@@ -3,7 +3,7 @@
 /**
  * print_hello - prints "Hello :)" and ignores the parameter
  *
- * @n: this parameter holds the number associated with the signal.
+ * @signum: this parameter holds the number associated with the signal.
  *
  * Return: Nothing.
  */
