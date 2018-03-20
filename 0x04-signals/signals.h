@@ -30,4 +30,7 @@ int trace_signal_sender(void);
 /* handler_print_pid - a handler that prints information */
 void handler_print_pid(int signum, siginfo_t *si, void *unused);
 
+/* handler_print_caught - a handler that prints information */
+void handler_print_caught(int signum);
+
 #endif
