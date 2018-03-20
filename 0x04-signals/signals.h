@@ -21,4 +21,7 @@ int handle_sigaction(void);
 /* interrupt_handler2 - function called upon receiving a signal */
 void interrupt_handler2(int signum);
 
+/* current_handler_sigaction - return the current handler using sigaction */
+void (*current_handler_sigaction(void))(int);
+
 #endif
