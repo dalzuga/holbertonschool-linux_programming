@@ -27,4 +27,7 @@ void (*current_handler_sigaction(void))(int);
 /* trace_signal_sender - returns the PID of the SIGQUIT sending process */
 int trace_signal_sender(void);
 
+/* handler_print_pid - a handler that prints information */
+void handler_print_pid(int signum, siginfo_t *si, void *unused);
+
 #endif
