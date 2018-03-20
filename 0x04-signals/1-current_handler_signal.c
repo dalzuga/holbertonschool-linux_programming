@@ -6,7 +6,7 @@ void print_hello(int);
 /**
  * current_handler_signal - gets the handler of the signal
  *
- * Return: Nothing.
+ * Return: The address of the handler function.
  */
 void (*current_handler_signal(void))(int signum)
 {
