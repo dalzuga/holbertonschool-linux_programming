@@ -24,4 +24,7 @@ void interrupt_handler2(int signum);
 /* current_handler_sigaction - return the current handler using sigaction */
 void (*current_handler_sigaction(void))(int);
 
+/* trace_signal_sender - returns the PID of the SIGQUIT sending process */
+int trace_signal_sender(void);
+
 #endif
