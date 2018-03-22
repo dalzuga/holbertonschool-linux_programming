@@ -9,7 +9,7 @@
  *
  * @argc: number of arguments
  * @argv: the argument vector
- * 
+ *
  * Return: EXIT_SUCCESS or EXIT_FAILURE
  */
 int main(int argc, char **argv)
@@ -23,16 +23,8 @@ int main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	n = strtol(argv[1], &endptr, 10); /* man strtol is complex */
-
 	if (errno != 0 || endptr == argv[1] || *endptr != '\0')
-	{
-		printf("debug: exiting with EXIT_FAILURE\n");
-		printf("debug: errno: %d\n", errno);
-		perror("strtol");
 		return (EXIT_FAILURE);
-	}
 	kill(n, SIGINT);
-	printf("errno: %d\n", errno);
-	perror("kill");
 	return (EXIT_SUCCESS);
 }
