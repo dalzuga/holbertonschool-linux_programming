@@ -15,20 +15,23 @@
 int main(int argc, char **argv)
 {
 	int n = 0; char *endptr = NULL;
+
 	errno = 0;
 	if (argc != 2)
 	{
 		printf("Usage: %s <signum>\n", argv[0]);
 		return (EXIT_FAILURE);
 	}
-	n = strtol(argv[1], &endptr, 10); /* man strtol is strange */
-	kill(n, SIGINT);
-	if (errno != 0 || endptr == argv[1])
+	n = strtol(argv[1], &endptr, 10); /* man strtol is complex */
+
+	if (errno != 0 || endptr == argv[1] || *endptr != '\0')
 	{
 		printf("debug: exiting with EXIT_FAILURE\n");
 		printf("debug: errno: %d\n", errno);
+		perror("strtol");
 		return (EXIT_FAILURE);
 	}
+	kill(n, SIGINT);
 	printf("errno: %d\n", errno);
 	perror("kill");
 	return (EXIT_SUCCESS);
