@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/bin/sh
 PID=$1
-kill -SIGQUIT $PID
+kill -3 $PID
