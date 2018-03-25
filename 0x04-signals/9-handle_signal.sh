@@ -1,2 +1,2 @@
-#!/bin/bash
-trap "echo -e Nope" SIGABRT SIGIO SIGTERM
+#!/bin/sh
+trap "printf \"Nope\n\"" ABRT IO TERM
