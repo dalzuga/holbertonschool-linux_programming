@@ -13,10 +13,10 @@ int main(int argc, char **argv __attribute__((unused)))
 {
 	char *filename = NULL;
 
-	if (argc <= 2)
+	if (argc <= 1)
 		filename = strdup("a.out");
 	else
-		filename = strdup(argv[0]);
+		filename = strdup(argv[1]);
 
 	if (filename == NULL)
 		return (EXIT_FAILURE);
@@ -28,11 +28,18 @@ int main(int argc, char **argv __attribute__((unused)))
 }
 
 /**
- * hnm_func - opens an ELF file and prints its contents
+ * hnm_func - opens an ELF file
  *
  * @filename: the name of the file.
  */
 void hnm_func(char *filename)
 {
-	printf("filename: %s\n", filename);
+	if ( access(filename, F_OK) != -1 )
+	{
+		printf("File exists.\n");
+	}
+	else
+	{
+		fprintf(stderr, "hnm: '%s': No such file\n", filename);
+	}
 }

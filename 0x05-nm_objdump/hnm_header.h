@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 /* hnm_func - opens an ELF file and prints its contents */
 void hnm_func(char *filename);
