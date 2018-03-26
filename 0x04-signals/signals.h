@@ -33,4 +33,7 @@ void handler_print_pid(int signum, siginfo_t *si, void *unused);
 /* handler_print_caught - a handler that prints information */
 void handler_print_caught(int signum);
 
+/* pid_exist - checks if a PID exists */
+int pid_exist(pid_t pid);
+
 #endif
