@@ -10,4 +10,7 @@
 /* hnm_func - opens an ELF file and prints its contents */
 void hnm_func(char *filename);
 
+/* hnm_verify_elf - checks the ELF magic number of a file stream */
+int hnm_verify_elf(FILE *f);
+
 #endif
