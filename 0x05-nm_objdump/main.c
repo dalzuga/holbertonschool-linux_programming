@@ -56,31 +56,35 @@ void hnm_func(char *filename)
 /**
  * hnm_verify_elf - checks the ELF magic number of a file stream
  *
- * @f: the file stream
+ * @f: pointer to file stream
  *
  * Return: 1 if file is ELF, 0 otherwise.
  */
 int hnm_verify_elf(FILE *f __attribute__((unused)))
 {
-	magic_t m_cookie;
+	char byte;
+	int tmp = 0;
 
-	/*
-         * m_cookie = malloc(sizeof(magic_t));
-	 * if (m_cookie == NULL)
-	 * 	exit(EXIT_FAILURE);
-         */
-
-	m_cookie = magic_open(MAGIC_NONE);
-	if (m_cookie == NULL)
+	fseek(f, 4, SEEK_SET);
+	tmp = fread(&byte, 1, 1, f);
+	if (tmp == 0)
 		exit(EXIT_FAILURE);
+	printf("the byte is: 0x%x\n", (unsigned int) byte);
 
-	printf("m_cookie: %p\n", (void *) m_cookie);
+	if (byte == 2)
+		return (hnm_verify_elf64(f));
 
-	if (magic_file(m_cookie, "./test_executables/hello1.o") == NULL)
-		printf("it's NULL\n");
-	else
-		printf("it's not NULL\n");
+	return (0);
+}
 
-	magic_close(m_cookie);
-	return (1);
+/**
+ * hnm_verify_elf64 - verifies this is a 64-bit ELF file
+ *
+ * @f: pointer to file stream
+ *
+ * Return: 1 if file is ELF, 0 otherwise.
+ */
+int hnm_verify_elf64(FILE *f __attribute__((unused)))
+{
+	return(1);
 }

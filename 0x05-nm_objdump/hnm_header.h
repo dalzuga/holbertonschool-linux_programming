@@ -6,12 +6,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <magic.h>
 
 /* hnm_func - opens an ELF file and prints its contents */
 void hnm_func(char *filename);
 
 /* hnm_verify_elf - checks the ELF magic number of a file stream */
 int hnm_verify_elf(FILE *f);
+
+/* hnm_verify_elf64 - verifies this is a 64-bit ELF file */
+int hnm_verify_elf64(FILE *f);
 
 #endif
