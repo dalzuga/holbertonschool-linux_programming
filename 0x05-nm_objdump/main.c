@@ -105,7 +105,14 @@ int hnm_verify_elf64(FILE *f __attribute__((unused)))
 		exit(EXIT_FAILURE);
 	}
 
-	tmp2 = fread(&read_bytes, 5, 1, f);
+	read_bytes = malloc(sizeof(char) * 5);
+	if (read_bytes == NULL)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+
+	tmp2 = fread(read_bytes, 5, 1, f);
 	printf("tmp2: %d\n", tmp2);
 	if (tmp2 < 1)
 	{
