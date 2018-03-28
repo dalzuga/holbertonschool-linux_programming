@@ -63,12 +63,20 @@ void hnm_func(char *filename)
 int hnm_verify_elf(FILE *f __attribute__((unused)))
 {
 	char byte;
-	int tmp = 0;
+	int tmp = 0, tmp2 = 0;
 
-	fseek(f, 4, SEEK_SET);
-	tmp = fread(&byte, 1, 1, f);
-	if (tmp == 0)
+	tmp = fseek(f, 4, SEEK_SET);
+	if (tmp == -1)
+	{
+		perror("fseek");
 		exit(EXIT_FAILURE);
+	}
+	tmp2 = fread(&byte, 1, 1, f);
+	if (tmp2 == 0)
+	{
+		perror("fread");
+		exit(EXIT_FAILURE);
+	}
 	printf("the byte is: 0x%x\n", (unsigned int) byte);
 
 	if (byte == 2)
@@ -86,5 +94,14 @@ int hnm_verify_elf(FILE *f __attribute__((unused)))
  */
 int hnm_verify_elf64(FILE *f __attribute__((unused)))
 {
+	int tmp = 0;
+
+	tmp = fseek(f, 0, SEEK_SET);
+	if (tmp == -1)
+	{
+		perror("fseek");
+		exit(EXIT_FAILURE);
+	}
+
 	return(1);
 }
