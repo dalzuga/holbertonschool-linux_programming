@@ -72,7 +72,7 @@ int hnm_verify_elf(FILE *f __attribute__((unused)))
 		exit(EXIT_FAILURE);
 	}
 	tmp2 = fread(&byte, 1, 1, f);
-	if (tmp2 == 0)
+	if (tmp2 < 1)
 	{
 		perror("fread");
 		exit(EXIT_FAILURE);
@@ -94,7 +94,9 @@ int hnm_verify_elf(FILE *f __attribute__((unused)))
  */
 int hnm_verify_elf64(FILE *f __attribute__((unused)))
 {
-	int tmp = 0;
+	int tmp = 0, tmp2 = 0, tmp3 = 0;
+	const char elf_bytes[6] = { 0x7f, 0x45, 0x4c, 0x46, 0x02, '\0' };
+	char *read_bytes = NULL;
 
 	tmp = fseek(f, 0, SEEK_SET);
 	if (tmp == -1)
@@ -102,6 +104,19 @@ int hnm_verify_elf64(FILE *f __attribute__((unused)))
 		perror("fseek");
 		exit(EXIT_FAILURE);
 	}
+
+	tmp2 = fread(&read_bytes, 5, 1, f);
+	printf("tmp2: %d\n", tmp2);
+	if (tmp2 < 1)
+	{
+		perror("fread");
+		exit(EXIT_FAILURE);
+	}
+
+	printf("elf_bytes: %s\n", elf_bytes);
+
+	tmp3 = strncmp(elf_bytes, read_bytes, 5);
+	printf("tmp3 [boolean] is: %d\n", tmp3);
 
 	return(1);
 }
