@@ -1,5 +1,5 @@
 hnm: main.c
-	gcc -Wall -Werror -Wextra -pedantic main.c -o hnm
+	gcc -Wall -Werror -Wextra -pedantic main.c -lmagic -o hnm
 test_exec_dir=test_executables
 hello1: $(test_exec_dir)/hello.c
 	gcc -c -Wall -Werror -Wextra -pedantic $(test_exec_dir)/hello.c -o $(test_exec_dir)/hello1.o

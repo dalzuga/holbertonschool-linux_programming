@@ -62,5 +62,25 @@ void hnm_func(char *filename)
  */
 int hnm_verify_elf(FILE *f __attribute__((unused)))
 {
+	magic_t m_cookie;
+
+	/*
+         * m_cookie = malloc(sizeof(magic_t));
+	 * if (m_cookie == NULL)
+	 * 	exit(EXIT_FAILURE);
+         */
+
+	m_cookie = magic_open(MAGIC_NONE);
+	if (m_cookie == NULL)
+		exit(EXIT_FAILURE);
+
+	printf("m_cookie: %p\n", (void *) m_cookie);
+
+	if (magic_file(m_cookie, "./test_executables/hello1.o") == NULL)
+		printf("it's NULL\n");
+	else
+		printf("it's not NULL\n");
+
+	magic_close(m_cookie);
 	return (1);
 }
