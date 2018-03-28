@@ -41,7 +41,7 @@ void hnm_func(char *filename)
 		printf("File exists.\n");
 		f = fopen(filename, "r");
 		if (hnm_verify_elf(f) == 1)
-			printf("This is an ELF file. (fake msg)\n");
+			printf("This is an ELF file. (real msg)\n");
 		else
 			fprintf(stderr, "hnm: %s: File format not recognized\n"
 				, filename);
@@ -123,7 +123,9 @@ int hnm_verify_elf64(FILE *f __attribute__((unused)))
 	printf("elf_bytes: %s\n", elf_bytes);
 
 	tmp3 = strncmp(elf_bytes, read_bytes, 5);
-	printf("tmp3 [boolean] is: %d\n", tmp3);
+
+	if (tmp3 == 0)
+		return (1);
 
 	return(1);
 }
