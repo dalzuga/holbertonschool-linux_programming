@@ -35,6 +35,7 @@ int main(int argc, char **argv __attribute__((unused)))
 void hnm_func(char *filename)
 {
 	FILE *f;
+	int tmp = 0;
 
 	if (access(filename, F_OK) != -1)
 	{
@@ -49,6 +50,12 @@ void hnm_func(char *filename)
 	else
 	{
 		fprintf(stderr, "hnm: '%s': No such file\n", filename);
+		exit(EXIT_FAILURE);
+	}
+	tmp = fclose(f);
+	if (tmp == EOF)
+	{
+		perror("fclose");
 		exit(EXIT_FAILURE);
 	}
 }
@@ -77,11 +84,12 @@ int hnm_verify_elf(FILE *f __attribute__((unused)))
 		perror("fread");
 		exit(EXIT_FAILURE);
 	}
-	printf("the byte is: 0x%x\n", (unsigned int) byte);
+	/* printf("the byte is: 0x%x\n", (unsigned int) byte); */
 
 	if (byte == 2)
 		return (hnm_verify_elf64(f));
-
+	if (byte == 1)
+		return (hnm_verify_elf32(f));
 	return (0);
 }
 
@@ -104,28 +112,63 @@ int hnm_verify_elf64(FILE *f __attribute__((unused)))
 		perror("fseek");
 		exit(EXIT_FAILURE);
 	}
-
 	read_bytes = malloc(sizeof(char) * 5);
 	if (read_bytes == NULL)
 	{
 		perror("malloc");
 		exit(EXIT_FAILURE);
 	}
-
 	tmp2 = fread(read_bytes, 5, 1, f);
-	printf("tmp2: %d\n", tmp2);
+	/* printf("tmp2: %d\n", tmp2); */
 	if (tmp2 < 1)
 	{
 		perror("fread");
 		exit(EXIT_FAILURE);
 	}
-
-	printf("elf_bytes: %s\n", elf_bytes);
-
+	/* printf("elf_bytes: %s\n", elf_bytes); */
 	tmp3 = strncmp(elf_bytes, read_bytes, 5);
-
+	free(read_bytes);
 	if (tmp3 == 0)
 		return (1);
+	return(1);
+}
 
+/**
+ * hnm_verify_elf32 - verifies this is a 32-bit ELF file
+ *
+ * @f: pointer to file stream
+ *
+ * Return: 1 if file is ELF, 0 otherwise.
+ */
+int hnm_verify_elf32(FILE *f __attribute__((unused)))
+{
+	int tmp = 0, tmp2 = 0, tmp3 = 0;
+	const char elf_bytes[6] = { 0x7f, 0x45, 0x4c, 0x46, 0x01, '\0' };
+	char *read_bytes = NULL;
+
+	tmp = fseek(f, 0, SEEK_SET);
+	if (tmp == -1)
+	{
+		perror("fseek");
+		exit(EXIT_FAILURE);
+	}
+	read_bytes = malloc(sizeof(char) * 5);
+	if (read_bytes == NULL)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+	tmp2 = fread(read_bytes, 5, 1, f);
+	/* printf("tmp2: %d\n", tmp2); */
+	if (tmp2 < 1)
+	{
+		perror("fread");
+		exit(EXIT_FAILURE);
+	}
+	/* printf("elf_bytes: %s\n", elf_bytes); */
+	tmp3 = strncmp(elf_bytes, read_bytes, 5);
+	free(read_bytes);
+	if (tmp3 == 0)
+		return (1);
 	return(1);
 }

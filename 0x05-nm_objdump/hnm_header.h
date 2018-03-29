@@ -16,4 +16,7 @@ int hnm_verify_elf(FILE *f);
 /* hnm_verify_elf64 - verifies this is a 64-bit ELF file */
 int hnm_verify_elf64(FILE *f);
 
+/** hnm_verify_elf32 - verifies this is a 32-bit ELF file */
+int hnm_verify_elf32(FILE *f);
+
 #endif
