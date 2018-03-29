@@ -42,10 +42,15 @@ void hnm_func(char *filename)
 		printf("File exists.\n");
 		f = fopen(filename, "r");
 		if (hnm_verify_elf(f) == 1)
+		{
 			printf("This is an ELF file. (real msg)\n");
+			symbol_table64(f);
+		}
 		else
+		{
 			fprintf(stderr, "hnm: %s: File format not recognized\n"
 				, filename);
+		}
 	}
 	else
 	{
