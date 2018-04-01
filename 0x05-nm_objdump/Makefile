@@ -1,4 +1,4 @@
-hnm: main.c
+hnm: *.c
 	gcc -Wall -Werror -Wextra -pedantic *.c -o hnm
 test_exec_dir=test_executables
 hello1: $(test_exec_dir)/hello.c
