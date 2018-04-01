@@ -18,7 +18,7 @@ int symbol_table64(FILE *f)
 		perror("malloc");
 		exit(EXIT_FAILURE);
 	}
-	tmp = fseek(f, EI_DATA - 1, SEEK_SET);
+	tmp = fseek(f, EI_DATA, SEEK_SET);
 	if (tmp == -1)
 	{
 		perror("fseek");
@@ -26,8 +26,18 @@ int symbol_table64(FILE *f)
 	}
 	tmp1 = fread(elf_header->e_ident + EI_DATA, 1, 1, f);
 
-	printf("tmp1: %d\n", tmp1);
 	printf("EI_DATA [hex]: %x\n", elf_header->e_ident[EI_DATA]);
+
+	if (tmp1 == ELFDATA2LSB)
+		printf("little endian\n");
+	else if (tmp1 == ELFDATA2MSB)
+		printf("big endian\n");
+	else
+	{
+		perror("");
+	}
+
+	tmp1 = fread(elf_header->e_ident + EI_DATA, 1, 1, f);
 
 	return (1);
 }
