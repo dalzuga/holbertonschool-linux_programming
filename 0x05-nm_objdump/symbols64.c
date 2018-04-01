@@ -10,6 +10,7 @@
 int symbol_table64(FILE *f)
 {
 	Elf64_Ehdr *elf_header;
+	Elf64_Sym *symtab;
 	int tmp = 0, tmp1 = 0;
 
 	elf_header = malloc(sizeof(Elf64_Ehdr));
@@ -33,11 +34,14 @@ int symbol_table64(FILE *f)
 	else if (tmp1 == ELFDATA2MSB)
 		printf("big endian\n");
 	else
-	{
-		perror("");
-	}
+		return (0);
 
-	tmp1 = fread(elf_header->e_ident + EI_DATA, 1, 1, f);
+	symtab = malloc(sizeof(Elf64_Sym));
+
+	symtab = fread(elf_header->sh_type + SHT_SYMTAB, sizeof(uint32_t), 1, f);
+
+	if (0)
+		printf("%p", (void *) symtab);
 
 	return (1);
 }
