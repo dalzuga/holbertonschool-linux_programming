@@ -50,12 +50,17 @@ int p_symbol_table(FILE *f)
 	if (s_hdr == NULL)
 		exit(EXIT_FAILURE);
 
+	printf("e_shstrndx: %ull\n", e_hdr->e_shstrndx);
+
 	for (i = 0; i < e_hdr->e_shnum; i++)
 	{
 		/* read section hdr */
 		tmp1 = fread(s_hdr, e_hdr->e_shentsize, 1, f);
 		if (tmp1 != 1)
 			exit(EXIT_FAILURE);
+
+		printf("s_hdr->sh_name: %ull\n", s_hdr->sh_name);
+		/* printf("%s\n", e_hdr->e_shstrndx[s_hdr->sh_name]); */
 
 		/*
                  * not the right way
@@ -65,9 +70,7 @@ int p_symbol_table(FILE *f)
 		 * 	exit(EXIT_FAILURE);
                  */
 
-		if (s_hdr->sh_type == SHT_STRTAB)
-		{}
-		printf("sh_type: %ull\n", s_hdr->sh_type);
+		/* printf("sh_name: %ull\n", s_hdr->sh_type); */
 	}
 
 	printf("MACRO: %ull\n", SHT_STRTAB);
