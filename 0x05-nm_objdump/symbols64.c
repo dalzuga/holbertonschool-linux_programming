@@ -60,7 +60,11 @@ int p_symbol_table(FILE *f)
 			exit(EXIT_FAILURE);
 
 		printf("s_hdr->sh_name: %ull\n", s_hdr->sh_name);
-		printf("%s\n", s_hdr + e_hdr->e_shstrndx + s_hdr->sh_name);
+		if (i == e_hdr->e_shstrndx)
+		{
+			printf("%d\n", e_hdr->e_shstrndx);
+			printf("%s\n", (char *) s_hdr + (s_hdr->sh_name));
+		}
 
 		/*
                  * not the right way
@@ -80,7 +84,6 @@ int p_symbol_table(FILE *f)
 		printf("%p", (void *) symtab);
 		printf("s_name: %s\n", s_name);
 	}
-
 
 	return (1);
 }
