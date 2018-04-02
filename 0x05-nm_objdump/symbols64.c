@@ -11,6 +11,7 @@ int symbol_table64(FILE *f)
 {
 	Elf64_Ehdr *elf_header;
 	Elf64_Sym *symtab;
+	Elf64_Shdr *shdr;
 	int tmp = 0, tmp1 = 0;
 
 	elf_header = malloc(sizeof(Elf64_Ehdr));
@@ -25,7 +26,10 @@ int symbol_table64(FILE *f)
 		perror("fseek");
 		exit(EXIT_FAILURE);
 	}
+
 	tmp1 = fread(elf_header->e_ident + EI_DATA, 1, 1, f);
+	if (fread != 1)
+		exit(EXIT_FAILURE);
 
 	printf("EI_DATA [hex]: %x\n", elf_header->e_ident[EI_DATA]);
 
@@ -36,9 +40,19 @@ int symbol_table64(FILE *f)
 	else
 		return (0);
 
-	symtab = malloc(sizeof(Elf64_Sym));
+	shdr = malloc(sizeof(Elf64_Shdr));
+	if (shdr == NULL)
+		exit(EXIT_FAILURE);
 
-	symtab = fread(elf_header->sh_type + SHT_SYMTAB, sizeof(uint32_t), 1, f);
+	shdr = fread(elf_header->e_shoff, Elf64_Off, 1, f);
+	if (fread != 1)
+		exit(EXIT_FAILURE);
+
+	symtab = malloc(sizeof(Elf64_Sym));
+	if (symtab == NULL)
+		exit(EXIT_FAILURE);
+
+	symtab = fread();
 
 	if (0)
 		printf("%p", (void *) symtab);
