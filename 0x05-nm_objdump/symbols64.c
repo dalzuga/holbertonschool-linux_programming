@@ -64,6 +64,8 @@ int p_symbol_table(FILE *f)
 		{
 			printf("%d\n", e_hdr->e_shstrndx);
 			printf("%s\n", (char *) s_hdr + (s_hdr->sh_name));
+			printf("%d\n", s_hdr->sh_type);
+			printf("%d\n", SHT_NULL);
 		}
 
 		/*
