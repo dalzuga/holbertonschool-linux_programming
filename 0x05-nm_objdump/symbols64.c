@@ -60,7 +60,7 @@ int p_symbol_table(FILE *f)
 			exit(EXIT_FAILURE);
 
 		printf("s_hdr->sh_name: %ull\n", s_hdr->sh_name);
-		/* printf("%s\n", e_hdr->e_shstrndx[s_hdr->sh_name]); */
+		printf("%s\n", s_hdr + e_hdr->e_shstrndx + s_hdr->sh_name);
 
 		/*
                  * not the right way
