@@ -44,7 +44,7 @@ void hnm_func(char *filename)
 		if (hnm_verify_elf(f) == 1)
 		{
 			printf("This is an ELF file. (real msg)\n");
-			symbol_table64(f);
+			p_symbol_table(f);
 		}
 		else
 		{
