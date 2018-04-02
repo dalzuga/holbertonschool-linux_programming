@@ -9,9 +9,10 @@
  */
 int p_symbol_table(FILE *f)
 {
-	Elf64_Ehdr *e_header;
-	Elf64_Sym *symtab;
-	Elf64_Shdr *shdr;
+	Elf64_Ehdr *e_header = NULL;
+	Elf64_Sym *symtab = NULL;
+	Elf64_Shdr *s_hdr = NULL;
+	char *s_name = NULL;
 	int tmp = 0, tmp1 = 0;
 
 	e_header = malloc(sizeof(Elf64_Ehdr));
@@ -30,25 +31,38 @@ int p_symbol_table(FILE *f)
 	if (tmp1 != 1)
 		exit(EXIT_FAILURE);
 
-	/* printf("e_header->e_shoff: %lu\n", e_header->e_shoff); */
+	printf("e_header->e_shoff: %lu\n", e_header->e_shoff);
+	printf("e_header->e_shnum: %d\n", e_header->e_shnum);
+	printf("e_header->e_shentsize: %d\n", e_header->e_shentsize);
 
 	if (e_header->e_shoff == 0) /* nothing to print */
 		return (1);	      /* success */
 
-	tmp = fseek(f, e_header->e_shoff, SEEK_SET);
-	if (tmp == -1)
-		exit(EXIT_FAILURE);
+	/*
+         * not necessary
+         * /\* seek into start of section header *\/
+	 * tmp = fseek(f, e_header->e_shoff, SEEK_SET);
+	 * if (tmp == -1)
+	 * 	exit(EXIT_FAILURE);
+         */
 
-	shdr = malloc(sizeof(Elf64_Shdr));
-	if (shdr == NULL)
+	s_hdr = malloc(sizeof(Elf64_Shdr));
+	if (s_hdr == NULL)
 		exit(EXIT_FAILURE);
 
 	/* read into section hdr */
-	tmp1 = fread(shdr, sizeof(Elf64_Shdr), 1, f);
+	tmp1 = fread(s_hdr, sizeof(Elf64_Shdr), 1, f);
 	if (tmp1 != 1)
 		exit(EXIT_FAILURE);
 
-	printf("shdr->sh_name: %s\n", e_header->e_shoff + shdr->sh_name);
+	/* seek into name of a section */
+	tmp = fseek(f, s_hdr->sh_name, SEEK_SET);
+	if (tmp == -1)
+		exit(EXIT_FAILURE);
+	s_name = malloc(sizeof(char) * 20);
+	fread(s_name, sizeof(char) * 20, 1, f);
+
+	printf("s_name: %s\n", s_name);
 
 	if (0)
 		printf("%p", (void *) symtab);
