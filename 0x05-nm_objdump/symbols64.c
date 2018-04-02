@@ -21,16 +21,34 @@ int p_symbol_table(FILE *f)
 		exit(EXIT_FAILURE);
 	}
 
+	tmp = fseek(f, 0, SEEK_SET);
+	if (tmp == -1)
+		exit(EXIT_FAILURE);
+
+	/* read into e_header */
+	tmp1 = fread(e_header, sizeof(Elf64_Ehdr), 1, f);
+	if (tmp1 != 1)
+		exit(EXIT_FAILURE);
+
+	/* printf("e_header->e_shoff: %lu\n", e_header->e_shoff); */
+
+	if (e_header->e_shoff == 0) /* nothing to print */
+		return (1);	      /* success */
+
+	tmp = fseek(f, e_header->e_shoff, SEEK_SET);
+	if (tmp == -1)
+		exit(EXIT_FAILURE);
+
 	shdr = malloc(sizeof(Elf64_Shdr));
 	if (shdr == NULL)
 		exit(EXIT_FAILURE);
 
-	shdr = fread(e_header->e_shoff, e_shnum, 1, f); /* read section hdr */
-	if (fread != 1)
+	/* read into section hdr */
+	tmp1 = fread(shdr, sizeof(Elf64_Shdr), 1, f);
+	if (tmp1 != 1)
 		exit(EXIT_FAILURE);
 
-	if (e_header->e_shoff == 0) /* nothing to print */
-		return (1);	      /* success */
+	printf("shdr->sh_name: %s\n", e_header->e_shoff + shdr->sh_name);
 
 	if (0)
 		printf("%p", (void *) symtab);
