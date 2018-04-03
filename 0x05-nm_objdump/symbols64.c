@@ -50,32 +50,34 @@ int p_symbol_table(FILE *f)
 	printf("e_shstrndx: %d\n", e_hdr->e_shstrndx);
 	printf("e_shstrndx SHN_UNDEF: %d\n", SHN_UNDEF);
 
-	for (i = 0; i < e_hdr->e_shnum; i++)
-	{
-		/* read section hdr */
-		tmp1 = fread(s_hdr, e_hdr->e_shentsize, 1, f);
-		if (tmp1 != 1)
-			exit(EXIT_FAILURE);
+	tmp = fseek(f, e_hdr->e_shoff + e_hdr->e_shstrndx, SEEK_SET);
+	if (tmp == -1)
+		exit(EXIT_FAILURE);
 
-		printf("s_hdr->sh_name: %ull\n", s_hdr->sh_name);
-		if (i == e_hdr->e_shstrndx)
-		{
-			printf("%d\n", e_hdr->e_shstrndx);
-			printf("%s\n", (char *) s_hdr + (s_hdr->sh_name));
-			printf("%d\n", s_hdr->sh_type);
-			printf("%d\n", SHT_NULL);
-		}
+	tmp1 = fread(s_hdr, e_hdr->e_shentsize, 1, f);
+	if (tmp1 != 1)
+		exit(EXIT_FAILURE);
 
-		/*
-                 * not the right way
-                 * /\* seek into name of a section *\/
-		 * tmp = fseek(f, s_hdr->sh_name, SEEK_SET);
-		 * if (tmp == -1)
-		 * 	exit(EXIT_FAILURE);
-                 */
+	printf("%s\n", (char *) s_hdr + (s_hdr->sh_name));
 
-		/* printf("sh_name: %ull\n", s_hdr->sh_type); */
-	}
+	/*
+         * for (i = 0; i < e_hdr->e_shnum; i++)
+	 * {
+	 * 	/\* read section hdr *\/
+	 * 	tmp1 = fread(s_hdr, e_hdr->e_shentsize, 1, f);
+	 * 	if (tmp1 != 1)
+	 * 		exit(EXIT_FAILURE);
+	 *
+	 * 	printf("s_hdr->sh_name: %ull\n", s_hdr->sh_name);
+	 * 	if (i == e_hdr->e_shstrndx)
+	 * 	{
+	 * 		printf("%d\n", e_hdr->e_shstrndx);
+	 * 		printf("%s\n", (char *) s_hdr + (s_hdr->sh_name));
+	 * 		printf("%d\n", s_hdr->sh_type);
+	 * 		printf("%d\n", SHT_NULL);
+	 * 	}
+	 * }
+         */
 
 	printf("MACRO: %ull\n", SHT_STRTAB);
 
@@ -83,6 +85,7 @@ int p_symbol_table(FILE *f)
 	{
 		printf("%p", (void *) symtab);
 		printf("s_name: %s\n", s_name);
+		printf("i: %d\n", i);
 	}
 
 	return (1);
