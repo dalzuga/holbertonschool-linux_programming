@@ -38,13 +38,10 @@ int p_symbol_table(FILE *f)
 	if (e_hdr->e_shoff == 0) /* nothing to print */
 		return (1);	      /* success */
 
-	/*
-         * not necessary
-         * /\* seek into start of section header *\/
-	 * tmp = fseek(f, e_hdr->e_shoff, SEEK_SET);
-	 * if (tmp == -1)
-	 * 	exit(EXIT_FAILURE);
-         */
+        /* seek into start of section header */
+	tmp = fseek(f, e_hdr->e_shoff, SEEK_SET);
+	if (tmp == -1)
+		exit(EXIT_FAILURE);
 
 	s_hdr = malloc(sizeof(Elf64_Shdr));
 	if (s_hdr == NULL)
