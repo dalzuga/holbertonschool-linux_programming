@@ -50,7 +50,8 @@ int p_symbol_table(FILE *f)
 	if (s_hdr == NULL)
 		exit(EXIT_FAILURE);
 
-	printf("e_shstrndx: %ull\n", e_hdr->e_shstrndx);
+	printf("e_shstrndx: %d\n", e_hdr->e_shstrndx);
+	printf("e_shstrndx SHN_UNDEF: %d\n", SHN_UNDEF);
 
 	for (i = 0; i < e_hdr->e_shnum; i++)
 	{
