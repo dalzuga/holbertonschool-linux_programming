@@ -50,15 +50,17 @@ int p_symbol_table(FILE *f)
 	printf("e_shstrndx: %d\n", e_hdr->e_shstrndx);
 	printf("e_shstrndx SHN_UNDEF: %d\n", SHN_UNDEF);
 
-	tmp = fseek(f, e_hdr->e_shoff + e_hdr->e_shstrndx, SEEK_SET);
-	if (tmp == -1)
-		exit(EXIT_FAILURE);
-
 	tmp1 = fread(s_hdr, e_hdr->e_shentsize, 1, f);
 	if (tmp1 != 1)
 		exit(EXIT_FAILURE);
 
 	printf("%s\n", (char *) s_hdr + (s_hdr->sh_name));
+
+	tmp = fseek(f, e_hdr->e_shoff + e_hdr->e_shstrndx, SEEK_SET);
+	if (tmp == -1)
+		exit(EXIT_FAILURE);
+
+	printf("MACRO: %ull\n", SHT_STRTAB);
 
 	/*
          * for (i = 0; i < e_hdr->e_shnum; i++)
@@ -78,8 +80,6 @@ int p_symbol_table(FILE *f)
 	 * 	}
 	 * }
          */
-
-	printf("MACRO: %ull\n", SHT_STRTAB);
 
 	if (0)			/* avoid compiler unused warning */
 	{
