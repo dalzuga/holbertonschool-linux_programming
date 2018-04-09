@@ -68,6 +68,15 @@ int p_symbol_table(FILE *f)
 	printf("%lu\n", (long unsigned) s_hdr->sh_name);
 	printf("%lu\n", (long unsigned) s_hdr->sh_offset);
 
+	tmp = fseek(f, e_hdr->e_shstrndx + s_hdr->sh_offset, SEEK_SET);
+	if (tmp == -1)
+		exit(EXIT_FAILURE);
+
+	s_name = malloc(sizeof(char) * 6);
+	fread(s_name, 5, 1, f);
+	s_name[5] = '\0';
+	printf("%s\n", s_name);
+
 	/* printf("MACRO: %ull\n", SHT_STRTAB); */
 
 	/*
