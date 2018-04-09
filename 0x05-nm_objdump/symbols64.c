@@ -58,13 +58,15 @@ int p_symbol_table(FILE *f)
 	if (tmp1 != 1)
 		exit(EXIT_FAILURE);
 
-	while (s_hdr->sh_type == SHT_NULL)
+	while (s_hdr->sh_type != SHT_STRTAB)
 	{
 		tmp1 = fread(s_hdr, e_hdr->e_shentsize, 1, f);
 		if (tmp1 != 1)
 			exit(EXIT_FAILURE);
 	}
 	printf("%lu\n", (long unsigned) s_hdr->sh_type);
+	printf("%lu\n", (long unsigned) s_hdr->sh_name);
+	printf("%lu\n", (long unsigned) s_hdr->sh_offset);
 
 	/* printf("MACRO: %ull\n", SHT_STRTAB); */
 
