@@ -72,9 +72,8 @@ int p_symbol_table(FILE *f)
 	if (tmp == -1)
 		exit(EXIT_FAILURE);
 
-	s_name = malloc(sizeof(char) * 6);
-	fread(s_name, 5, 1, f);
-	s_name[5] = '\0';
+	s_name = malloc(sizeof(char) * 100);
+	fread(s_name, 100, 1, f);
 	printf("%s\n", s_name);
 
 	/* printf("MACRO: %ull\n", SHT_STRTAB); */
